@@ -141,5 +141,10 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: "Cairo", system-ui, -apple-system, sans-serif;
+  }
+
+  .font-arabic-quran {
+    font-family: "Amiri", "Traditional Arabic", serif;
   }
 }
