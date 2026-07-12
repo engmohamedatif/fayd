@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TasbihRouteImport } from './routes/tasbih'
 import { Route as RadioRouteImport } from './routes/radio'
 import { Route as PrayerTimesRouteImport } from './routes/prayer-times'
+import { Route as DuasRouteImport } from './routes/duas'
 import { Route as AdhkarRouteImport } from './routes/adhkar'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -30,6 +31,11 @@ const PrayerTimesRoute = PrayerTimesRouteImport.update({
   path: '/prayer-times',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DuasRoute = DuasRouteImport.update({
+  id: '/duas',
+  path: '/duas',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdhkarRoute = AdhkarRouteImport.update({
   id: '/adhkar',
   path: '/adhkar',
@@ -44,6 +50,7 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/adhkar': typeof AdhkarRoute
+  '/duas': typeof DuasRoute
   '/prayer-times': typeof PrayerTimesRoute
   '/radio': typeof RadioRoute
   '/tasbih': typeof TasbihRoute
@@ -51,6 +58,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/adhkar': typeof AdhkarRoute
+  '/duas': typeof DuasRoute
   '/prayer-times': typeof PrayerTimesRoute
   '/radio': typeof RadioRoute
   '/tasbih': typeof TasbihRoute
@@ -59,21 +67,30 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/adhkar': typeof AdhkarRoute
+  '/duas': typeof DuasRoute
   '/prayer-times': typeof PrayerTimesRoute
   '/radio': typeof RadioRoute
   '/tasbih': typeof TasbihRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/adhkar' | '/prayer-times' | '/radio' | '/tasbih'
+  fullPaths: '/' | '/adhkar' | '/duas' | '/prayer-times' | '/radio' | '/tasbih'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/adhkar' | '/prayer-times' | '/radio' | '/tasbih'
-  id: '__root__' | '/' | '/adhkar' | '/prayer-times' | '/radio' | '/tasbih'
+  to: '/' | '/adhkar' | '/duas' | '/prayer-times' | '/radio' | '/tasbih'
+  id:
+    | '__root__'
+    | '/'
+    | '/adhkar'
+    | '/duas'
+    | '/prayer-times'
+    | '/radio'
+    | '/tasbih'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdhkarRoute: typeof AdhkarRoute
+  DuasRoute: typeof DuasRoute
   PrayerTimesRoute: typeof PrayerTimesRoute
   RadioRoute: typeof RadioRoute
   TasbihRoute: typeof TasbihRoute
@@ -102,6 +119,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrayerTimesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/duas': {
+      id: '/duas'
+      path: '/duas'
+      fullPath: '/duas'
+      preLoaderRoute: typeof DuasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/adhkar': {
       id: '/adhkar'
       path: '/adhkar'
@@ -122,6 +146,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdhkarRoute: AdhkarRoute,
+  DuasRoute: DuasRoute,
   PrayerTimesRoute: PrayerTimesRoute,
   RadioRoute: RadioRoute,
   TasbihRoute: TasbihRoute,
