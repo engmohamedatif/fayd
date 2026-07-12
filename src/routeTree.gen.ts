@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TasbihRouteImport } from './routes/tasbih'
 import { Route as RadioRouteImport } from './routes/radio'
+import { Route as PrayerTimesRouteImport } from './routes/prayer-times'
 import { Route as IndexRouteImport } from './routes/index'
 
 const TasbihRoute = TasbihRouteImport.update({
@@ -23,6 +24,11 @@ const RadioRoute = RadioRouteImport.update({
   path: '/radio',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrayerTimesRoute = PrayerTimesRouteImport.update({
+  id: '/prayer-times',
+  path: '/prayer-times',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -31,30 +37,34 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/prayer-times': typeof PrayerTimesRoute
   '/radio': typeof RadioRoute
   '/tasbih': typeof TasbihRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/prayer-times': typeof PrayerTimesRoute
   '/radio': typeof RadioRoute
   '/tasbih': typeof TasbihRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/prayer-times': typeof PrayerTimesRoute
   '/radio': typeof RadioRoute
   '/tasbih': typeof TasbihRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/radio' | '/tasbih'
+  fullPaths: '/' | '/prayer-times' | '/radio' | '/tasbih'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/radio' | '/tasbih'
-  id: '__root__' | '/' | '/radio' | '/tasbih'
+  to: '/' | '/prayer-times' | '/radio' | '/tasbih'
+  id: '__root__' | '/' | '/prayer-times' | '/radio' | '/tasbih'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PrayerTimesRoute: typeof PrayerTimesRoute
   RadioRoute: typeof RadioRoute
   TasbihRoute: typeof TasbihRoute
 }
@@ -75,6 +85,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RadioRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/prayer-times': {
+      id: '/prayer-times'
+      path: '/prayer-times'
+      fullPath: '/prayer-times'
+      preLoaderRoute: typeof PrayerTimesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -87,6 +104,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PrayerTimesRoute: PrayerTimesRoute,
   RadioRoute: RadioRoute,
   TasbihRoute: TasbihRoute,
 }
