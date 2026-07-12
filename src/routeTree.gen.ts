@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TasbihRouteImport } from './routes/tasbih'
 import { Route as StoriesRouteImport } from './routes/stories'
 import { Route as RadioRouteImport } from './routes/radio'
+import { Route as QuranRouteImport } from './routes/quran'
 import { Route as PrayerTimesRouteImport } from './routes/prayer-times'
 import { Route as HadithRouteImport } from './routes/hadith'
 import { Route as DuasRouteImport } from './routes/duas'
@@ -31,6 +32,11 @@ const StoriesRoute = StoriesRouteImport.update({
 const RadioRoute = RadioRouteImport.update({
   id: '/radio',
   path: '/radio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuranRoute = QuranRouteImport.update({
+  id: '/quran',
+  path: '/quran',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrayerTimesRoute = PrayerTimesRouteImport.update({
@@ -65,6 +71,7 @@ export interface FileRoutesByFullPath {
   '/duas': typeof DuasRoute
   '/hadith': typeof HadithRoute
   '/prayer-times': typeof PrayerTimesRoute
+  '/quran': typeof QuranRoute
   '/radio': typeof RadioRoute
   '/stories': typeof StoriesRoute
   '/tasbih': typeof TasbihRoute
@@ -75,6 +82,7 @@ export interface FileRoutesByTo {
   '/duas': typeof DuasRoute
   '/hadith': typeof HadithRoute
   '/prayer-times': typeof PrayerTimesRoute
+  '/quran': typeof QuranRoute
   '/radio': typeof RadioRoute
   '/stories': typeof StoriesRoute
   '/tasbih': typeof TasbihRoute
@@ -86,6 +94,7 @@ export interface FileRoutesById {
   '/duas': typeof DuasRoute
   '/hadith': typeof HadithRoute
   '/prayer-times': typeof PrayerTimesRoute
+  '/quran': typeof QuranRoute
   '/radio': typeof RadioRoute
   '/stories': typeof StoriesRoute
   '/tasbih': typeof TasbihRoute
@@ -98,6 +107,7 @@ export interface FileRouteTypes {
     | '/duas'
     | '/hadith'
     | '/prayer-times'
+    | '/quran'
     | '/radio'
     | '/stories'
     | '/tasbih'
@@ -108,6 +118,7 @@ export interface FileRouteTypes {
     | '/duas'
     | '/hadith'
     | '/prayer-times'
+    | '/quran'
     | '/radio'
     | '/stories'
     | '/tasbih'
@@ -118,6 +129,7 @@ export interface FileRouteTypes {
     | '/duas'
     | '/hadith'
     | '/prayer-times'
+    | '/quran'
     | '/radio'
     | '/stories'
     | '/tasbih'
@@ -129,6 +141,7 @@ export interface RootRouteChildren {
   DuasRoute: typeof DuasRoute
   HadithRoute: typeof HadithRoute
   PrayerTimesRoute: typeof PrayerTimesRoute
+  QuranRoute: typeof QuranRoute
   RadioRoute: typeof RadioRoute
   StoriesRoute: typeof StoriesRoute
   TasbihRoute: typeof TasbihRoute
@@ -155,6 +168,13 @@ declare module '@tanstack/react-router' {
       path: '/radio'
       fullPath: '/radio'
       preLoaderRoute: typeof RadioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quran': {
+      id: '/quran'
+      path: '/quran'
+      fullPath: '/quran'
+      preLoaderRoute: typeof QuranRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/prayer-times': {
@@ -201,6 +221,7 @@ const rootRouteChildren: RootRouteChildren = {
   DuasRoute: DuasRoute,
   HadithRoute: HadithRoute,
   PrayerTimesRoute: PrayerTimesRoute,
+  QuranRoute: QuranRoute,
   RadioRoute: RadioRoute,
   StoriesRoute: StoriesRoute,
   TasbihRoute: TasbihRoute,
