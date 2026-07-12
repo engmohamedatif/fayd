@@ -9,9 +9,15 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TasbihRouteImport } from './routes/tasbih'
 import { Route as RadioRouteImport } from './routes/radio'
 import { Route as IndexRouteImport } from './routes/index'
 
+const TasbihRoute = TasbihRouteImport.update({
+  id: '/tasbih',
+  path: '/tasbih',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RadioRoute = RadioRouteImport.update({
   id: '/radio',
   path: '/radio',
@@ -26,31 +32,42 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/radio': typeof RadioRoute
+  '/tasbih': typeof TasbihRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/radio': typeof RadioRoute
+  '/tasbih': typeof TasbihRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/radio': typeof RadioRoute
+  '/tasbih': typeof TasbihRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/radio'
+  fullPaths: '/' | '/radio' | '/tasbih'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/radio'
-  id: '__root__' | '/' | '/radio'
+  to: '/' | '/radio' | '/tasbih'
+  id: '__root__' | '/' | '/radio' | '/tasbih'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   RadioRoute: typeof RadioRoute
+  TasbihRoute: typeof TasbihRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/tasbih': {
+      id: '/tasbih'
+      path: '/tasbih'
+      fullPath: '/tasbih'
+      preLoaderRoute: typeof TasbihRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/radio': {
       id: '/radio'
       path: '/radio'
@@ -71,6 +88,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   RadioRoute: RadioRoute,
+  TasbihRoute: TasbihRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
