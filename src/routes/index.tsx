@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
-import { BookOpen, Radio, Sparkles, ScrollText, Quote, Users, CircleDot, Clock } from "lucide-react";
+import { BookOpen, Radio, Sparkles, ScrollText, Quote, Users, CircleDot, Clock, Headphones } from "lucide-react";
 import { NextPrayerWidget } from "@/components/NextPrayerWidget";
 
 export const Route = createFileRoute("/")({
@@ -8,7 +8,8 @@ export const Route = createFileRoute("/")({
 });
 
 const features = [
-  { to: "/quran", title: "القرآن الكريم", desc: "قراءة واستماع بأصوات كبار المشايخ", Icon: BookOpen },
+  { to: "/quran-read", title: "قراءة القرآن", desc: "اقرأ القرآن الكريم برسم المصحف", Icon: BookOpen },
+  { to: "/quran-listen", title: "استماع القرآن", desc: "استمع لكبار المشايخ آية بآية أو سورة كاملة", Icon: Headphones },
   { to: "/radio", title: "إذاعة القرآن مباشر", desc: "بث مباشر من إذاعة القرآن الكريم من القاهرة", Icon: Radio },
   { to: "/adhkar", title: "الأذكار", desc: "أذكار الصباح والمساء وبعد الصلاة والنوم", Icon: Sparkles },
   { to: "/duas", title: "الأدعية", desc: "مجموعة واسعة من الأدعية المأثورة", Icon: Quote },
@@ -38,11 +39,11 @@ function Index() {
             <Link
               key={to}
               to={to}
-              className="group rounded-2xl border border-border bg-card p-5 hover:bg-foreground hover:text-background transition"
+              className="group rounded-2xl border border-border bg-card p-5 md:hover:bg-foreground md:hover:text-background transition"
             >
               <Icon className="h-7 w-7 mb-3" />
               <div className="font-bold">{title}</div>
-              <div className="text-xs mt-1 text-muted-foreground group-hover:text-background/80">{desc}</div>
+              <div className="text-xs mt-1 text-muted-foreground md:group-hover:text-background/80">{desc}</div>
             </Link>
           ))}
         </div>
