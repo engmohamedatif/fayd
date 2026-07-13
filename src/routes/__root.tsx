@@ -79,14 +79,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "فيض - تطبيق إسلامي شامل" },
+      { title: "فيض - رفقيك للجنة" },
       { name: "description", content: "فيض تطبيق إسلامي شامل: إذاعة القرآن الكريم مباشر، سبحة إلكترونية، أذكار، أدعية، أحاديث، قصص الأنبياء ومواقيت الصلاة." },
       { name: "author", content: "محمد عاطف" },
       { name: "theme-color", content: "#000000" },
-      { property: "og:title", content: "فيض - تطبيق إسلامي شامل" },
-      { property: "og:description", content: "قرآن كريم، أذكار، أدعية، أحاديث، مواقيت الصلاة والمزيد." },
+      { property: "og:title", content: "فيض - رفقيك للجنة" },
+      { property: "og:description", content: "فيض تطبيق إسلامي شامل: إذاعة القرآن الكريم مباشر، سبحة إلكترونية، أذكار، أدعية، أحاديث، قصص الأنبياء ومواقيت الصلاة." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "فيض - رفقيك للجنة" },
+      { name: "twitter:description", content: "فيض تطبيق إسلامي شامل: إذاعة القرآن الكريم مباشر، سبحة إلكترونية، أذكار، أدعية، أحاديث، قصص الأنبياء ومواقيت الصلاة." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/6705071d-a2d4-4f42-bacc-85752fc5ab16" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/6705071d-a2d4-4f42-bacc-85752fc5ab16" },
     ],
     links: [
       {
