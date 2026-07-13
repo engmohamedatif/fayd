@@ -4,7 +4,8 @@ import { Menu, X } from "lucide-react";
 
 const links = [
   { to: "/", label: "الرئيسية" },
-  { to: "/quran", label: "القرآن" },
+  { to: "/quran-read", label: "قراءة القرآن" },
+  { to: "/quran-listen", label: "استماع القرآن" },
   { to: "/radio", label: "إذاعة القرآن" },
   { to: "/adhkar", label: "الأذكار" },
   { to: "/duas", label: "الأدعية" },

@@ -12,13 +12,16 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TasbihRouteImport } from './routes/tasbih'
 import { Route as StoriesRouteImport } from './routes/stories'
 import { Route as RadioRouteImport } from './routes/radio'
-import { Route as QuranRouteImport } from './routes/quran'
+import { Route as QuranReadRouteImport } from './routes/quran-read'
+import { Route as QuranListenRouteImport } from './routes/quran-listen'
 import { Route as PrayerTimesRouteImport } from './routes/prayer-times'
 import { Route as HadithRouteImport } from './routes/hadith'
 import { Route as DuasRouteImport } from './routes/duas'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AdhkarRouteImport } from './routes/adhkar'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as QuranSurahRouteImport } from './routes/quran.$surah'
+import { Route as QuranReadSurahRouteImport } from './routes/quran-read.$surah'
+import { Route as QuranListenReciterRouteImport } from './routes/quran-listen.$reciter'
 
 const TasbihRoute = TasbihRouteImport.update({
   id: '/tasbih',
@@ -35,9 +38,14 @@ const RadioRoute = RadioRouteImport.update({
   path: '/radio',
   getParentRoute: () => rootRouteImport,
 } as any)
-const QuranRoute = QuranRouteImport.update({
-  id: '/quran',
-  path: '/quran',
+const QuranReadRoute = QuranReadRouteImport.update({
+  id: '/quran-read',
+  path: '/quran-read',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuranListenRoute = QuranListenRouteImport.update({
+  id: '/quran-listen',
+  path: '/quran-listen',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrayerTimesRoute = PrayerTimesRouteImport.update({
@@ -55,6 +63,11 @@ const DuasRoute = DuasRouteImport.update({
   path: '/duas',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdhkarRoute = AdhkarRouteImport.update({
   id: '/adhkar',
   path: '/adhkar',
@@ -65,95 +78,120 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const QuranSurahRoute = QuranSurahRouteImport.update({
+const QuranReadSurahRoute = QuranReadSurahRouteImport.update({
   id: '/$surah',
   path: '/$surah',
-  getParentRoute: () => QuranRoute,
+  getParentRoute: () => QuranReadRoute,
+} as any)
+const QuranListenReciterRoute = QuranListenReciterRouteImport.update({
+  id: '/$reciter',
+  path: '/$reciter',
+  getParentRoute: () => QuranListenRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/adhkar': typeof AdhkarRoute
+  '/admin': typeof AdminRoute
   '/duas': typeof DuasRoute
   '/hadith': typeof HadithRoute
   '/prayer-times': typeof PrayerTimesRoute
-  '/quran': typeof QuranRouteWithChildren
+  '/quran-listen': typeof QuranListenRouteWithChildren
+  '/quran-read': typeof QuranReadRouteWithChildren
   '/radio': typeof RadioRoute
   '/stories': typeof StoriesRoute
   '/tasbih': typeof TasbihRoute
-  '/quran/$surah': typeof QuranSurahRoute
+  '/quran-listen/$reciter': typeof QuranListenReciterRoute
+  '/quran-read/$surah': typeof QuranReadSurahRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/adhkar': typeof AdhkarRoute
+  '/admin': typeof AdminRoute
   '/duas': typeof DuasRoute
   '/hadith': typeof HadithRoute
   '/prayer-times': typeof PrayerTimesRoute
-  '/quran': typeof QuranRouteWithChildren
+  '/quran-listen': typeof QuranListenRouteWithChildren
+  '/quran-read': typeof QuranReadRouteWithChildren
   '/radio': typeof RadioRoute
   '/stories': typeof StoriesRoute
   '/tasbih': typeof TasbihRoute
-  '/quran/$surah': typeof QuranSurahRoute
+  '/quran-listen/$reciter': typeof QuranListenReciterRoute
+  '/quran-read/$surah': typeof QuranReadSurahRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/adhkar': typeof AdhkarRoute
+  '/admin': typeof AdminRoute
   '/duas': typeof DuasRoute
   '/hadith': typeof HadithRoute
   '/prayer-times': typeof PrayerTimesRoute
-  '/quran': typeof QuranRouteWithChildren
+  '/quran-listen': typeof QuranListenRouteWithChildren
+  '/quran-read': typeof QuranReadRouteWithChildren
   '/radio': typeof RadioRoute
   '/stories': typeof StoriesRoute
   '/tasbih': typeof TasbihRoute
-  '/quran/$surah': typeof QuranSurahRoute
+  '/quran-listen/$reciter': typeof QuranListenReciterRoute
+  '/quran-read/$surah': typeof QuranReadSurahRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/adhkar'
+    | '/admin'
     | '/duas'
     | '/hadith'
     | '/prayer-times'
-    | '/quran'
+    | '/quran-listen'
+    | '/quran-read'
     | '/radio'
     | '/stories'
     | '/tasbih'
-    | '/quran/$surah'
+    | '/quran-listen/$reciter'
+    | '/quran-read/$surah'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/adhkar'
+    | '/admin'
     | '/duas'
     | '/hadith'
     | '/prayer-times'
-    | '/quran'
+    | '/quran-listen'
+    | '/quran-read'
     | '/radio'
     | '/stories'
     | '/tasbih'
-    | '/quran/$surah'
+    | '/quran-listen/$reciter'
+    | '/quran-read/$surah'
   id:
     | '__root__'
     | '/'
     | '/adhkar'
+    | '/admin'
     | '/duas'
     | '/hadith'
     | '/prayer-times'
-    | '/quran'
+    | '/quran-listen'
+    | '/quran-read'
     | '/radio'
     | '/stories'
     | '/tasbih'
-    | '/quran/$surah'
+    | '/quran-listen/$reciter'
+    | '/quran-read/$surah'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdhkarRoute: typeof AdhkarRoute
+  AdminRoute: typeof AdminRoute
   DuasRoute: typeof DuasRoute
   HadithRoute: typeof HadithRoute
   PrayerTimesRoute: typeof PrayerTimesRoute
-  QuranRoute: typeof QuranRouteWithChildren
+  QuranListenRoute: typeof QuranListenRouteWithChildren
+  QuranReadRoute: typeof QuranReadRouteWithChildren
   RadioRoute: typeof RadioRoute
   StoriesRoute: typeof StoriesRoute
   TasbihRoute: typeof TasbihRoute
@@ -182,11 +220,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RadioRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/quran': {
-      id: '/quran'
-      path: '/quran'
-      fullPath: '/quran'
-      preLoaderRoute: typeof QuranRouteImport
+    '/quran-read': {
+      id: '/quran-read'
+      path: '/quran-read'
+      fullPath: '/quran-read'
+      preLoaderRoute: typeof QuranReadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quran-listen': {
+      id: '/quran-listen'
+      path: '/quran-listen'
+      fullPath: '/quran-listen'
+      preLoaderRoute: typeof QuranListenRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/prayer-times': {
@@ -210,6 +255,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DuasRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/adhkar': {
       id: '/adhkar'
       path: '/adhkar'
@@ -224,33 +276,56 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/quran/$surah': {
-      id: '/quran/$surah'
+    '/quran-read/$surah': {
+      id: '/quran-read/$surah'
       path: '/$surah'
-      fullPath: '/quran/$surah'
-      preLoaderRoute: typeof QuranSurahRouteImport
-      parentRoute: typeof QuranRoute
+      fullPath: '/quran-read/$surah'
+      preLoaderRoute: typeof QuranReadSurahRouteImport
+      parentRoute: typeof QuranReadRoute
+    }
+    '/quran-listen/$reciter': {
+      id: '/quran-listen/$reciter'
+      path: '/$reciter'
+      fullPath: '/quran-listen/$reciter'
+      preLoaderRoute: typeof QuranListenReciterRouteImport
+      parentRoute: typeof QuranListenRoute
     }
   }
 }
 
-interface QuranRouteChildren {
-  QuranSurahRoute: typeof QuranSurahRoute
+interface QuranListenRouteChildren {
+  QuranListenReciterRoute: typeof QuranListenReciterRoute
 }
 
-const QuranRouteChildren: QuranRouteChildren = {
-  QuranSurahRoute: QuranSurahRoute,
+const QuranListenRouteChildren: QuranListenRouteChildren = {
+  QuranListenReciterRoute: QuranListenReciterRoute,
 }
 
-const QuranRouteWithChildren = QuranRoute._addFileChildren(QuranRouteChildren)
+const QuranListenRouteWithChildren = QuranListenRoute._addFileChildren(
+  QuranListenRouteChildren,
+)
+
+interface QuranReadRouteChildren {
+  QuranReadSurahRoute: typeof QuranReadSurahRoute
+}
+
+const QuranReadRouteChildren: QuranReadRouteChildren = {
+  QuranReadSurahRoute: QuranReadSurahRoute,
+}
+
+const QuranReadRouteWithChildren = QuranReadRoute._addFileChildren(
+  QuranReadRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdhkarRoute: AdhkarRoute,
+  AdminRoute: AdminRoute,
   DuasRoute: DuasRoute,
   HadithRoute: HadithRoute,
   PrayerTimesRoute: PrayerTimesRoute,
-  QuranRoute: QuranRouteWithChildren,
+  QuranListenRoute: QuranListenRouteWithChildren,
+  QuranReadRoute: QuranReadRouteWithChildren,
   RadioRoute: RadioRoute,
   StoriesRoute: StoriesRoute,
   TasbihRoute: TasbihRoute,
@@ -258,3 +333,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
