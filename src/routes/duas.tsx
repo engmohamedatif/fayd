@@ -26,12 +26,6 @@ function DuasPage() {
       .catch(() => setErr("تعذر تحميل الأدعية. حاول لاحقاً."));
   }, []);
 
-  const filtered = useMemo(() => {
-    if (!cats) return null;
-    return cats.filter((c) => !excludeKeywords.some((k) => c.TITLE.includes(k)) && c.TITLE.includes("دعاء") || (cats && !excludeKeywords.some((k) => c.TITLE.includes(k)) && !c.TITLE.includes("دعاء") ? false : false));
-  }, [cats]);
-
-  // simpler: show all categories that aren't dhikr-focused
   const list = useMemo(() => {
     if (!cats) return null;
     const base = cats.filter((c) => !excludeKeywords.some((k) => c.TITLE.includes(k)));
@@ -48,8 +42,6 @@ function DuasPage() {
 
   if (err) return <div className="mx-auto max-w-3xl px-4 py-10 text-center text-muted-foreground">{err}</div>;
   if (!list) return <div className="mx-auto max-w-3xl px-4 py-10 text-center">جاري التحميل...</div>;
-
-  void filtered;
 
   if (selected) {
     return (
