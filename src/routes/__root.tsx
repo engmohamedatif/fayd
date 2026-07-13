@@ -90,8 +90,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "فيض - رفقيك للجنة" },
       { name: "twitter:description", content: "فيض تطبيق إسلامي شامل: إذاعة القرآن الكريم مباشر، سبحة إلكترونية، أذكار، أدعية، أحاديث، قصص الأنبياء ومواقيت الصلاة." },
-      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/6705071d-a2d4-4f42-bacc-85752fc5ab16" },
-      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/6705071d-a2d4-4f42-bacc-85752fc5ab16" },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/JitOoMagebe8WaysCdVGegUC2Ax1/social-images/social-1783944509777-ChatGPT_Image_Jul_13,_2026,_03_08_08_PM.webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/JitOoMagebe8WaysCdVGegUC2Ax1/social-images/social-1783944509777-ChatGPT_Image_Jul_13,_2026,_03_08_08_PM.webp" },
     ],
     links: [
       {
