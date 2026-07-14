@@ -147,3 +147,40 @@
     font-family: "Amiri", "Traditional Arabic", serif;
   }
 }
+
+/* Custom range (audio player) styled with app identity */
+.fayd-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    var(--color-foreground) 0%,
+    var(--color-foreground) var(--pct, 0%),
+    var(--color-muted) var(--pct, 0%),
+    var(--color-muted) 100%
+  );
+  outline: none;
+  cursor: pointer;
+}
+.fayd-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 14px;
+  width: 14px;
+  border-radius: 999px;
+  background: var(--color-foreground);
+  border: 2px solid var(--color-background);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  cursor: pointer;
+}
+.fayd-range::-moz-range-thumb {
+  height: 14px;
+  width: 14px;
+  border-radius: 999px;
+  background: var(--color-foreground);
+  border: 2px solid var(--color-background);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  cursor: pointer;
+}
