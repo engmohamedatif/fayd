@@ -8,20 +8,13 @@ export type MP3Reciter = {
 // Curated legendary reciters (mp3quran servers). Files: `${server}${padded_surah}.mp3`
 export const MP3_RECITERS: MP3Reciter[] = [
   { id: "yasser", name: "ياسر الدوسري", server: "https://server11.mp3quran.net/yasser/" },
-  { id: "minsh", name: "محمد صديق المنشاوي", server: "https://server10.mp3quran.net/minsh/" },
-  { id: "abdulbasit", name: "عبد الباسط عبد الصمد (مرتل)", server: "https://server7.mp3quran.net/basit/" },
-  { id: "abdulbasit-mjw", name: "عبد الباسط عبد الصمد (مجود)", server: "https://server11.mp3quran.net/basit/Almusshaf-Al-Mojawwad/" },
+  { id: "minsh", name: "محمد صديق المنشاوي (مرتل)", server: "https://server10.mp3quran.net/minsh/" },
+  { id: "minsh-mjw", name: "محمد صديق المنشاوي (مجود)", server: "https://server10.mp3quran.net/minsh/Almusshaf-Al-Mojawwad/" },
+  { id: "abdulbasit-mjw", name: "عبد الباسط عبد الصمد (مجود)", server: "https://server7.mp3quran.net/basit/Almusshaf-Al-Mojawwad/" },
   { id: "tblawi", name: "محمد الطبلاوي", server: "https://server12.mp3quran.net/tblawi/Al-Mojawwad/" },
   { id: "mustafa", name: "الشيخ مصطفى إسماعيل", server: "https://server8.mp3quran.net/mustafa/Almusshaf-Al-Mojawwad/" },
   { id: "refat", name: "الشيخ محمد رفعت", server: "https://server14.mp3quran.net/refat/" },
   { id: "bna", name: "الشيخ محمود علي البنا", server: "https://server8.mp3quran.net/bna/Almusshaf-Al-Mojawwad/" },
-  { id: "shu3aisha3", name: "الشيخ أبو العينين شعيشع", server: "https://server6.mp3quran.net/shu3aisha3/" },
-  { id: "husr", name: "محمود خليل الحصري", server: "https://server11.mp3quran.net/husr/" },
-  { id: "afs", name: "مشاري راشد العفاسي", server: "https://server8.mp3quran.net/afs/" },
-  { id: "sds", name: "عبد الرحمن السديس", server: "https://server11.mp3quran.net/sds/" },
-  { id: "maher", name: "ماهر المعيقلي", server: "https://server12.mp3quran.net/maher/" },
-  { id: "shur", name: "سعود الشريم", server: "https://server7.mp3quran.net/shur/" },
-  { id: "ajm", name: "أحمد بن علي العجمي", server: "https://server10.mp3quran.net/ajm/" },
 ];
 
 export function surahAudioUrl(server: string, surahNumber: number) {
