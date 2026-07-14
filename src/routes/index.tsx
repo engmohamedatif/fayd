@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
-import { BookOpen, Radio, Sparkles, ScrollText, Quote, Users, CircleDot, Clock, Headphones } from "lucide-react";
+import { BookOpen, Radio, Sparkles, ScrollText, Quote, Users, CircleDot, Clock, Headphones, BookMarked } from "lucide-react";
 import { NextPrayerWidget } from "@/components/NextPrayerWidget";
 
 export const Route = createFileRoute("/")({
@@ -10,6 +10,7 @@ export const Route = createFileRoute("/")({
 const features = [
   { to: "/quran-read", title: "قراءة القرآن", desc: "اقرأ القرآن الكريم برسم المصحف", Icon: BookOpen },
   { to: "/quran-listen", title: "استماع القرآن", desc: "استمع لكبار المشايخ آية بآية أو سورة كاملة", Icon: Headphones },
+  { to: "/tafsir", title: "تفسير القرآن", desc: "تفسير القرآن الكريم بعدة تفاسير موثوقة", Icon: BookMarked },
   { to: "/radio", title: "إذاعة القرآن مباشر", desc: "بث مباشر من إذاعة القرآن الكريم من القاهرة", Icon: Radio },
   { to: "/adhkar", title: "الأذكار", desc: "أذكار الصباح والمساء وبعد الصلاة والنوم", Icon: Sparkles },
   { to: "/duas", title: "الأدعية", desc: "مجموعة واسعة من الأدعية المأثورة", Icon: Quote },
