@@ -164,7 +164,7 @@ export function NextPrayerWidget() {
         <div className="text-center space-y-3">
           <p className="opacity-80">لعرض مواقيت الصلاة والصلاة القادمة نحتاج إذن الوصول لموقعك.</p>
           <button
-            onClick={requestLocation}
+            onClick={() => requestLocation()}
             className="rounded-full bg-background text-foreground px-5 py-2 font-semibold hover:opacity-90"
           >
             السماح بالوصول للموقع
