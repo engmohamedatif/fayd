@@ -33,7 +33,8 @@ function HadithPage() {
     fetch(`https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/${book.edition}.json`)
       .then((r) => r.json())
       .then((j) => {
-        const hs: Hadith[] = j.hadiths ?? [];
+        const all: Hadith[] = j.hadiths ?? [];
+        const hs = all.filter((h) => (h?.text ?? "").trim().length > 0);
         setTotal(hs.length);
         setItems(hs);
         setStart(1);

@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TasbihRouteImport } from './routes/tasbih'
+import { Route as TafsirRouteImport } from './routes/tafsir'
 import { Route as StoriesRouteImport } from './routes/stories'
 import { Route as RadioRouteImport } from './routes/radio'
 import { Route as QuranReadRouteImport } from './routes/quran-read'
@@ -20,12 +21,18 @@ import { Route as DuasRouteImport } from './routes/duas'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AdhkarRouteImport } from './routes/adhkar'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as TafsirSurahRouteImport } from './routes/tafsir.$surah'
 import { Route as QuranReadSurahRouteImport } from './routes/quran-read.$surah'
 import { Route as QuranListenReciterRouteImport } from './routes/quran-listen.$reciter'
 
 const TasbihRoute = TasbihRouteImport.update({
   id: '/tasbih',
   path: '/tasbih',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TafsirRoute = TafsirRouteImport.update({
+  id: '/tafsir',
+  path: '/tafsir',
   getParentRoute: () => rootRouteImport,
 } as any)
 const StoriesRoute = StoriesRouteImport.update({
@@ -78,6 +85,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TafsirSurahRoute = TafsirSurahRouteImport.update({
+  id: '/$surah',
+  path: '/$surah',
+  getParentRoute: () => TafsirRoute,
+} as any)
 const QuranReadSurahRoute = QuranReadSurahRouteImport.update({
   id: '/$surah',
   path: '/$surah',
@@ -100,9 +112,11 @@ export interface FileRoutesByFullPath {
   '/quran-read': typeof QuranReadRouteWithChildren
   '/radio': typeof RadioRoute
   '/stories': typeof StoriesRoute
+  '/tafsir': typeof TafsirRouteWithChildren
   '/tasbih': typeof TasbihRoute
   '/quran-listen/$reciter': typeof QuranListenReciterRoute
   '/quran-read/$surah': typeof QuranReadSurahRoute
+  '/tafsir/$surah': typeof TafsirSurahRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -115,9 +129,11 @@ export interface FileRoutesByTo {
   '/quran-read': typeof QuranReadRouteWithChildren
   '/radio': typeof RadioRoute
   '/stories': typeof StoriesRoute
+  '/tafsir': typeof TafsirRouteWithChildren
   '/tasbih': typeof TasbihRoute
   '/quran-listen/$reciter': typeof QuranListenReciterRoute
   '/quran-read/$surah': typeof QuranReadSurahRoute
+  '/tafsir/$surah': typeof TafsirSurahRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -131,9 +147,11 @@ export interface FileRoutesById {
   '/quran-read': typeof QuranReadRouteWithChildren
   '/radio': typeof RadioRoute
   '/stories': typeof StoriesRoute
+  '/tafsir': typeof TafsirRouteWithChildren
   '/tasbih': typeof TasbihRoute
   '/quran-listen/$reciter': typeof QuranListenReciterRoute
   '/quran-read/$surah': typeof QuranReadSurahRoute
+  '/tafsir/$surah': typeof TafsirSurahRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -148,9 +166,11 @@ export interface FileRouteTypes {
     | '/quran-read'
     | '/radio'
     | '/stories'
+    | '/tafsir'
     | '/tasbih'
     | '/quran-listen/$reciter'
     | '/quran-read/$surah'
+    | '/tafsir/$surah'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -163,9 +183,11 @@ export interface FileRouteTypes {
     | '/quran-read'
     | '/radio'
     | '/stories'
+    | '/tafsir'
     | '/tasbih'
     | '/quran-listen/$reciter'
     | '/quran-read/$surah'
+    | '/tafsir/$surah'
   id:
     | '__root__'
     | '/'
@@ -178,9 +200,11 @@ export interface FileRouteTypes {
     | '/quran-read'
     | '/radio'
     | '/stories'
+    | '/tafsir'
     | '/tasbih'
     | '/quran-listen/$reciter'
     | '/quran-read/$surah'
+    | '/tafsir/$surah'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -194,6 +218,7 @@ export interface RootRouteChildren {
   QuranReadRoute: typeof QuranReadRouteWithChildren
   RadioRoute: typeof RadioRoute
   StoriesRoute: typeof StoriesRoute
+  TafsirRoute: typeof TafsirRouteWithChildren
   TasbihRoute: typeof TasbihRoute
 }
 
@@ -204,6 +229,13 @@ declare module '@tanstack/react-router' {
       path: '/tasbih'
       fullPath: '/tasbih'
       preLoaderRoute: typeof TasbihRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tafsir': {
+      id: '/tafsir'
+      path: '/tafsir'
+      fullPath: '/tafsir'
+      preLoaderRoute: typeof TafsirRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/stories': {
@@ -276,6 +308,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tafsir/$surah': {
+      id: '/tafsir/$surah'
+      path: '/$surah'
+      fullPath: '/tafsir/$surah'
+      preLoaderRoute: typeof TafsirSurahRouteImport
+      parentRoute: typeof TafsirRoute
+    }
     '/quran-read/$surah': {
       id: '/quran-read/$surah'
       path: '/$surah'
@@ -317,6 +356,17 @@ const QuranReadRouteWithChildren = QuranReadRoute._addFileChildren(
   QuranReadRouteChildren,
 )
 
+interface TafsirRouteChildren {
+  TafsirSurahRoute: typeof TafsirSurahRoute
+}
+
+const TafsirRouteChildren: TafsirRouteChildren = {
+  TafsirSurahRoute: TafsirSurahRoute,
+}
+
+const TafsirRouteWithChildren =
+  TafsirRoute._addFileChildren(TafsirRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdhkarRoute: AdhkarRoute,
@@ -328,18 +378,9 @@ const rootRouteChildren: RootRouteChildren = {
   QuranReadRoute: QuranReadRouteWithChildren,
   RadioRoute: RadioRoute,
   StoriesRoute: StoriesRoute,
+  TafsirRoute: TafsirRouteWithChildren,
   TasbihRoute: TasbihRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

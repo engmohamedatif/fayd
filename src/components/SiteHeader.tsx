@@ -6,6 +6,7 @@ const links = [
   { to: "/", label: "الرئيسية" },
   { to: "/quran-read", label: "قراءة القرآن" },
   { to: "/quran-listen", label: "استماع القرآن" },
+  { to: "/tafsir", label: "التفسير" },
   { to: "/radio", label: "إذاعة القرآن" },
   { to: "/adhkar", label: "الأذكار" },
   { to: "/duas", label: "الأدعية" },
