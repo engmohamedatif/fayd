@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ChevronLeft, Play, Pause, SkipBack, SkipForward } from "lucide-react";
+import { ChevronLeft, Play, Pause, SkipBack, SkipForward, Loader2 } from "lucide-react";
 import { MP3_RECITERS, VERSE_RECITERS, surahAudioUrl } from "@/lib/quran-reciters";
 import { z } from "zod";
 
@@ -69,6 +69,9 @@ function PlayerView({ reciter, mode, surahs, surahNumber, onBack, reciterName }:
   const [audioAyahs, setAudioAyahs] = useState<Ayah[] | null>(null);
   const [current, setCurrent] = useState(0);
   const [playing, setPlaying] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [curT, setCurT] = useState(0);
+  const [durT, setDurT] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
@@ -173,7 +176,44 @@ function PlayerView({ reciter, mode, surahs, surahNumber, onBack, reciterName }:
         )}
       </div>
 
-      <audio ref={audioRef} onEnded={onEnded} onPause={() => setPlaying(false)} onPlay={() => setPlaying(true)} controls className="w-full max-w-xl mx-auto block" />
+      <audio
+        ref={audioRef}
+        onEnded={onEnded}
+        onPause={() => setPlaying(false)}
+        onPlay={() => { setPlaying(true); setLoading(false); }}
+        onWaiting={() => setLoading(true)}
+        onCanPlay={() => setLoading(false)}
+        onLoadedMetadata={(e) => setDurT((e.currentTarget as HTMLAudioElement).duration || 0)}
+        onTimeUpdate={(e) => setCurT((e.currentTarget as HTMLAudioElement).currentTime)}
+        className="hidden"
+      />
+      <div className="mx-auto max-w-xl">
+        <div className="space-y-1.5" dir="ltr">
+          <input
+            type="range"
+            min={0}
+            max={durT || 0}
+            step={0.1}
+            value={curT}
+            onChange={(e) => {
+              const v = Number(e.target.value);
+              if (audioRef.current) audioRef.current.currentTime = v;
+              setCurT(v);
+            }}
+            className="fayd-range w-full"
+            style={{ ["--pct" as string]: `${durT > 0 ? (curT / durT) * 100 : 0}%` }}
+          />
+          <div className="flex justify-between text-[11px] text-muted-foreground tabular-nums">
+            <span>{fmtT(curT)}</span>
+            <span>{fmtT(durT)}</span>
+          </div>
+        </div>
+        {loading && (
+          <div className="flex justify-center mt-2 text-muted-foreground">
+            <Loader2 className="h-4 w-4 animate-spin" />
+          </div>
+        )}
+      </div>
 
       {mode === "verse" && ayahs && (
         <div className="leading-loose text-xl font-arabic-quran text-justify">
