@@ -6,6 +6,13 @@ import { z } from "zod";
 
 const searchSchema = z.object({ mode: z.enum(["verse", "full"]).default("full") });
 
+function fmtT(t: number) {
+  if (!isFinite(t) || t < 0) return "0:00";
+  const m = Math.floor(t / 60);
+  const s = Math.floor(t % 60);
+  return `${m}:${String(s).padStart(2, "0")}`;
+}
+
 export const Route = createFileRoute("/quran-listen/$reciter")({
   validateSearch: (s) => searchSchema.parse(s),
   head: () => ({ meta: [{ title: "الاستماع - فيض" }] }),
