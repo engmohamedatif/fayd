@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { MapPin, Clock } from "lucide-react";
 
 type Timings = Record<string, string>;
+type Cache = { lat: number; lon: number; timings: Timings; timezone?: string; date: string };
+const CACHE_KEY = "fayd:prayer-cache";
 const PRAYERS = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"] as const;
 const NAMES: Record<string, string> = {
   Fajr: "الفجر",
@@ -23,34 +25,81 @@ export function NextPrayerWidget() {
     return () => clearInterval(t);
   }, []);
 
-  const requestLocation = () => {
+  const todayKey = () => new Date().toISOString().slice(0, 10);
+
+  const fetchTimings = async (lat: number, lon: number, showLoading: boolean) => {
+    if (showLoading) setStatus("loading");
+    try {
+      const res = await fetch(
+        `https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=5`,
+      );
+      const json = await res.json();
+      const t: Timings = json.data.timings;
+      const tz = json.data.meta?.timezone ?? "";
+      setTimings(t);
+      setCity(tz);
+      setStatus("ready");
+      try {
+        localStorage.setItem(
+          CACHE_KEY,
+          JSON.stringify({ lat, lon, timings: t, timezone: tz, date: todayKey() } satisfies Cache),
+        );
+      } catch {}
+    } catch {
+      if (showLoading) setStatus("error");
+    }
+  };
+
+  const requestLocation = (silent = false) => {
     if (!("geolocation" in navigator)) {
       setStatus("error");
       return;
     }
-    setStatus("loading");
+    if (!silent) setStatus("loading");
     navigator.geolocation.getCurrentPosition(
-      async (pos) => {
-        try {
-          const { latitude, longitude } = pos.coords;
-          const res = await fetch(
-            `https://api.aladhan.com/v1/timings?latitude=${latitude}&longitude=${longitude}&method=5`,
-          );
-          const json = await res.json();
-          setTimings(json.data.timings);
-          setCity(json.data.meta?.timezone ?? "");
-          setStatus("ready");
-        } catch {
-          setStatus("error");
-        }
-      },
-      () => setStatus("denied"),
-      { timeout: 10000 },
+      (pos) => fetchTimings(pos.coords.latitude, pos.coords.longitude, !silent),
+      () => { if (!silent) setStatus("denied"); },
+      { timeout: 10000, maximumAge: 60 * 60 * 1000 },
     );
   };
 
   useEffect(() => {
-    requestLocation();
+    // 1) Try cache first for instant paint
+    let hadCache = false;
+    try {
+      const raw = localStorage.getItem(CACHE_KEY);
+      if (raw) {
+        const c: Cache = JSON.parse(raw);
+        if (c?.timings) {
+          setTimings(c.timings);
+          setCity(c.timezone ?? "");
+          setStatus("ready");
+          hadCache = true;
+          // If cache is from today, refresh silently in background using cached coords.
+          if (c.date === todayKey()) {
+            fetchTimings(c.lat, c.lon, false);
+            return;
+          }
+        }
+      }
+    } catch {}
+
+    // 2) If permission already granted, skip loading state
+    const start = async () => {
+      try {
+        // @ts-ignore
+        if (navigator.permissions?.query) {
+          // @ts-ignore
+          const p = await navigator.permissions.query({ name: "geolocation" });
+          if (p.state === "granted") {
+            requestLocation(hadCache);
+            return;
+          }
+        }
+      } catch {}
+      requestLocation(hadCache);
+    };
+    start();
   }, []);
 
   const next = (() => {
@@ -115,7 +164,7 @@ export function NextPrayerWidget() {
         <div className="text-center space-y-3">
           <p className="opacity-80">لعرض مواقيت الصلاة والصلاة القادمة نحتاج إذن الوصول لموقعك.</p>
           <button
-            onClick={requestLocation}
+            onClick={() => requestLocation()}
             className="rounded-full bg-background text-foreground px-5 py-2 font-semibold hover:opacity-90"
           >
             السماح بالوصول للموقع

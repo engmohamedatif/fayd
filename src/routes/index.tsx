@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import { BookOpen, Radio, Sparkles, ScrollText, Quote, Users, CircleDot, Clock, Headphones, BookMarked } from "lucide-react";
 import { NextPrayerWidget } from "@/components/NextPrayerWidget";
+import { InstallPWAButton } from "@/components/InstallPWAButton";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -29,6 +30,9 @@ function Index() {
         <p className="text-muted-foreground max-w-xl mx-auto">
           تطبيق إسلامي شامل يجمع بين يديك القرآن الكريم، الأذكار، الأدعية، الأحاديث، وقصص الأنبياء ومواقيت الصلاة.
         </p>
+        <div className="pt-2 flex justify-center">
+          <InstallPWAButton />
+        </div>
       </section>
 
       <NextPrayerWidget />
