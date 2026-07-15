@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { RefreshCw } from "lucide-react";
+import { RefreshCw, Copy, Check } from "lucide-react";
 
 export const Route = createFileRoute("/hadith")({
   head: () => ({ meta: [{ title: "الأحاديث النبوية - فيض" }, { name: "description", content: "أحاديث نبوية من الكتب الصحيحة." }] }),
@@ -25,6 +25,16 @@ function HadithPage() {
   const [total, setTotal] = useState(0);
   const [err, setErr] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [copied, setCopied] = useState<number | null>(null);
+
+  const copyHadith = async (h: Hadith) => {
+    const text = `${h.text}\n\n(${book.name} — حديث رقم ${h.hadithnumber})`;
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(h.hadithnumber);
+      setTimeout(() => setCopied((c) => (c === h.hadithnumber ? null : c)), 1500);
+    } catch {}
+  };
 
   useEffect(() => {
     setItems(null);
@@ -80,7 +90,20 @@ function HadithPage() {
           <div className="space-y-3">
             {shown.map((h) => (
               <div key={h.hadithnumber} className="rounded-2xl border border-border p-5">
-                <div className="text-xs text-muted-foreground mb-2">حديث رقم {h.hadithnumber}</div>
+                <div className="flex items-center justify-between mb-2">
+                  <div className="text-xs text-muted-foreground">حديث رقم {h.hadithnumber}</div>
+                  <button
+                    onClick={() => copyHadith(h)}
+                    className="inline-flex items-center gap-1 rounded-full border border-border px-3 py-1 text-xs hover:bg-foreground hover:text-background transition"
+                    aria-label="نسخ الحديث"
+                  >
+                    {copied === h.hadithnumber ? (
+                      <><Check className="h-3.5 w-3.5" /> تم النسخ</>
+                    ) : (
+                      <><Copy className="h-3.5 w-3.5" /> نسخ</>
+                    )}
+                  </button>
+                </div>
                 <p className="leading-loose text-lg font-arabic-quran">{h.text}</p>
               </div>
             ))}
