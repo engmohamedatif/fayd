@@ -1,13 +1,22 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Search } from "lucide-react";
 
 export const Route = createFileRoute("/stories")({
-  head: () => ({ meta: [{ title: "قصص الأنبياء - فيض" }, { name: "description", content: "قصص الأنبياء عليهم السلام." }] }),
+  head: () => ({
+    meta: [
+      { title: "قصص الأنبياء والمرسلين - فيض" },
+      { name: "description", content: "قصص الأنبياء والمرسلين عليهم السلام بالتفصيل من آدم إلى محمد ﷺ: نشأتهم ودعوتهم ومعجزاتهم وابتلاءاتهم، مستقاة من القرآن الكريم والسنة النبوية." },
+      { name: "keywords", content: "قصص الأنبياء, قصة آدم, قصة نوح, قصة إبراهيم, قصة يوسف, قصة موسى, قصة عيسى, السيرة النبوية, قصص القرآن" },
+      { property: "og:title", content: "قصص الأنبياء والمرسلين - فيض" },
+      { property: "og:description", content: "سرد مفصّل لقصص الأنبياء عليهم السلام من القرآن والسنة." },
+    ],
+  }),
   component: StoriesPage,
 });
 
-type Prophet = { name: string; title: string; story: string };
+type Section = { heading: string; body: string };
+type Prophet = { name: string; title: string; sections: Section[] };
 
 const PROPHETS: Prophet[] = [
   {
