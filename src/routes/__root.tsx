@@ -92,6 +92,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:description", content: "فيض تطبيق إسلامي شامل: إذاعة القرآن الكريم مباشر، سبحة إلكترونية، أذكار، أدعية، أحاديث، قصص الأنبياء ومواقيت الصلاة." },
       { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/JitOoMagebe8WaysCdVGegUC2Ax1/social-images/social-1783944509777-ChatGPT_Image_Jul_13,_2026,_03_08_08_PM.webp" },
       { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/JitOoMagebe8WaysCdVGegUC2Ax1/social-images/social-1783944509777-ChatGPT_Image_Jul_13,_2026,_03_08_08_PM.webp" },
+      { name: "keywords", content: "القرآن الكريم, استماع القرآن, تفسير القرآن, أذكار الصباح, أذكار المساء, أدعية, أحاديث نبوية, قصص الأنبياء, مواقيت الصلاة, إذاعة القرآن مباشر, سبحة إلكترونية, تطبيق إسلامي, فيض" },
     ],
     links: [
       {
@@ -104,6 +105,24 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;800&display=swap" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          name: "فيض",
+          alternateName: "Fayd",
+          url: "https://fayd.lovable.app",
+          applicationCategory: "LifestyleApplication",
+          operatingSystem: "Any",
+          inLanguage: "ar",
+          description: "تطبيق إسلامي شامل: القرآن الكريم قراءة واستماعاً، التفسير، الأذكار، الأدعية، الأحاديث، قصص الأنبياء، ومواقيت الصلاة.",
+          author: { "@type": "Person", name: "محمد عاطف", url: "https://www.facebook.com/Mohamed.Atef.Dev" },
+          offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+        }),
+      },
     ],
   }),
   shellComponent: RootShell,

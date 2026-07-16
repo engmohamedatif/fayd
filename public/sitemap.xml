@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://fayd.lovable.app/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://fayd.lovable.app/quran-read</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://fayd.lovable.app/quran-listen</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://fayd.lovable.app/tafsir</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://fayd.lovable.app/radio</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://fayd.lovable.app/adhkar</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://fayd.lovable.app/duas</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://fayd.lovable.app/hadith</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://fayd.lovable.app/stories</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://fayd.lovable.app/tasbih</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://fayd.lovable.app/prayer-times</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+</urlset>
