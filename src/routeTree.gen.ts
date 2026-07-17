@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ZakatRouteImport } from './routes/zakat'
 import { Route as TasbihRouteImport } from './routes/tasbih'
 import { Route as TafsirRouteImport } from './routes/tafsir'
 import { Route as StoriesRouteImport } from './routes/stories'
@@ -28,6 +29,11 @@ import { Route as TafsirSurahRouteImport } from './routes/tafsir.$surah'
 import { Route as QuranReadSurahRouteImport } from './routes/quran-read.$surah'
 import { Route as QuranListenReciterRouteImport } from './routes/quran-listen.$reciter'
 
+const ZakatRoute = ZakatRouteImport.update({
+  id: '/zakat',
+  path: '/zakat',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TasbihRoute = TasbihRouteImport.update({
   id: '/tasbih',
   path: '/tasbih',
@@ -135,6 +141,7 @@ export interface FileRoutesByFullPath {
   '/stories': typeof StoriesRoute
   '/tafsir': typeof TafsirRouteWithChildren
   '/tasbih': typeof TasbihRoute
+  '/zakat': typeof ZakatRoute
   '/quran-listen/$reciter': typeof QuranListenReciterRoute
   '/quran-read/$surah': typeof QuranReadSurahRoute
   '/tafsir/$surah': typeof TafsirSurahRoute
@@ -155,6 +162,7 @@ export interface FileRoutesByTo {
   '/stories': typeof StoriesRoute
   '/tafsir': typeof TafsirRouteWithChildren
   '/tasbih': typeof TasbihRoute
+  '/zakat': typeof ZakatRoute
   '/quran-listen/$reciter': typeof QuranListenReciterRoute
   '/quran-read/$surah': typeof QuranReadSurahRoute
   '/tafsir/$surah': typeof TafsirSurahRoute
@@ -176,6 +184,7 @@ export interface FileRoutesById {
   '/stories': typeof StoriesRoute
   '/tafsir': typeof TafsirRouteWithChildren
   '/tasbih': typeof TasbihRoute
+  '/zakat': typeof ZakatRoute
   '/quran-listen/$reciter': typeof QuranListenReciterRoute
   '/quran-read/$surah': typeof QuranReadSurahRoute
   '/tafsir/$surah': typeof TafsirSurahRoute
@@ -198,6 +207,7 @@ export interface FileRouteTypes {
     | '/stories'
     | '/tafsir'
     | '/tasbih'
+    | '/zakat'
     | '/quran-listen/$reciter'
     | '/quran-read/$surah'
     | '/tafsir/$surah'
@@ -218,6 +228,7 @@ export interface FileRouteTypes {
     | '/stories'
     | '/tafsir'
     | '/tasbih'
+    | '/zakat'
     | '/quran-listen/$reciter'
     | '/quran-read/$surah'
     | '/tafsir/$surah'
@@ -238,6 +249,7 @@ export interface FileRouteTypes {
     | '/stories'
     | '/tafsir'
     | '/tasbih'
+    | '/zakat'
     | '/quran-listen/$reciter'
     | '/quran-read/$surah'
     | '/tafsir/$surah'
@@ -259,10 +271,18 @@ export interface RootRouteChildren {
   StoriesRoute: typeof StoriesRoute
   TafsirRoute: typeof TafsirRouteWithChildren
   TasbihRoute: typeof TasbihRoute
+  ZakatRoute: typeof ZakatRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/zakat': {
+      id: '/zakat'
+      path: '/zakat'
+      fullPath: '/zakat'
+      preLoaderRoute: typeof ZakatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tasbih': {
       id: '/tasbih'
       path: '/tasbih'
@@ -443,6 +463,7 @@ const rootRouteChildren: RootRouteChildren = {
   StoriesRoute: StoriesRoute,
   TafsirRoute: TafsirRouteWithChildren,
   TasbihRoute: TasbihRoute,
+  ZakatRoute: ZakatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
