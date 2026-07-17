@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TasbihRouteImport } from './routes/tasbih'
 import { Route as TafsirRouteImport } from './routes/tafsir'
 import { Route as StoriesRouteImport } from './routes/stories'
+import { Route as SeerahRouteImport } from './routes/seerah'
 import { Route as RadioRouteImport } from './routes/radio'
 import { Route as QuranReadRouteImport } from './routes/quran-read'
 import { Route as QuranListenRouteImport } from './routes/quran-listen'
@@ -39,6 +40,11 @@ const TafsirRoute = TafsirRouteImport.update({
 const StoriesRoute = StoriesRouteImport.update({
   id: '/stories',
   path: '/stories',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SeerahRoute = SeerahRouteImport.update({
+  id: '/seerah',
+  path: '/seerah',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RadioRoute = RadioRouteImport.update({
@@ -118,6 +124,7 @@ export interface FileRoutesByFullPath {
   '/quran-listen': typeof QuranListenRouteWithChildren
   '/quran-read': typeof QuranReadRouteWithChildren
   '/radio': typeof RadioRoute
+  '/seerah': typeof SeerahRoute
   '/stories': typeof StoriesRoute
   '/tafsir': typeof TafsirRouteWithChildren
   '/tasbih': typeof TasbihRoute
@@ -136,6 +143,7 @@ export interface FileRoutesByTo {
   '/quran-listen': typeof QuranListenRouteWithChildren
   '/quran-read': typeof QuranReadRouteWithChildren
   '/radio': typeof RadioRoute
+  '/seerah': typeof SeerahRoute
   '/stories': typeof StoriesRoute
   '/tafsir': typeof TafsirRouteWithChildren
   '/tasbih': typeof TasbihRoute
@@ -155,6 +163,7 @@ export interface FileRoutesById {
   '/quran-listen': typeof QuranListenRouteWithChildren
   '/quran-read': typeof QuranReadRouteWithChildren
   '/radio': typeof RadioRoute
+  '/seerah': typeof SeerahRoute
   '/stories': typeof StoriesRoute
   '/tafsir': typeof TafsirRouteWithChildren
   '/tasbih': typeof TasbihRoute
@@ -175,6 +184,7 @@ export interface FileRouteTypes {
     | '/quran-listen'
     | '/quran-read'
     | '/radio'
+    | '/seerah'
     | '/stories'
     | '/tafsir'
     | '/tasbih'
@@ -193,6 +203,7 @@ export interface FileRouteTypes {
     | '/quran-listen'
     | '/quran-read'
     | '/radio'
+    | '/seerah'
     | '/stories'
     | '/tafsir'
     | '/tasbih'
@@ -211,6 +222,7 @@ export interface FileRouteTypes {
     | '/quran-listen'
     | '/quran-read'
     | '/radio'
+    | '/seerah'
     | '/stories'
     | '/tafsir'
     | '/tasbih'
@@ -230,6 +242,7 @@ export interface RootRouteChildren {
   QuranListenRoute: typeof QuranListenRouteWithChildren
   QuranReadRoute: typeof QuranReadRouteWithChildren
   RadioRoute: typeof RadioRoute
+  SeerahRoute: typeof SeerahRoute
   StoriesRoute: typeof StoriesRoute
   TafsirRoute: typeof TafsirRouteWithChildren
   TasbihRoute: typeof TasbihRoute
@@ -256,6 +269,13 @@ declare module '@tanstack/react-router' {
       path: '/stories'
       fullPath: '/stories'
       preLoaderRoute: typeof StoriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/seerah': {
+      id: '/seerah'
+      path: '/seerah'
+      fullPath: '/seerah'
+      preLoaderRoute: typeof SeerahRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/radio': {
@@ -398,6 +418,7 @@ const rootRouteChildren: RootRouteChildren = {
   QuranListenRoute: QuranListenRouteWithChildren,
   QuranReadRoute: QuranReadRouteWithChildren,
   RadioRoute: RadioRoute,
+  SeerahRoute: SeerahRoute,
   StoriesRoute: StoriesRoute,
   TafsirRoute: TafsirRouteWithChildren,
   TasbihRoute: TasbihRoute,
