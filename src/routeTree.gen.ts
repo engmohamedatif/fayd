@@ -18,6 +18,7 @@ import { Route as QuranListenRouteImport } from './routes/quran-listen'
 import { Route as PrayerTimesRouteImport } from './routes/prayer-times'
 import { Route as HadithRouteImport } from './routes/hadith'
 import { Route as DuasRouteImport } from './routes/duas'
+import { Route as AsmaRouteImport } from './routes/asma'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AdhkarRouteImport } from './routes/adhkar'
 import { Route as IndexRouteImport } from './routes/index'
@@ -70,6 +71,11 @@ const DuasRoute = DuasRouteImport.update({
   path: '/duas',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AsmaRoute = AsmaRouteImport.update({
+  id: '/asma',
+  path: '/asma',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminRoute = AdminRouteImport.update({
   id: '/admin',
   path: '/admin',
@@ -105,6 +111,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/adhkar': typeof AdhkarRoute
   '/admin': typeof AdminRoute
+  '/asma': typeof AsmaRoute
   '/duas': typeof DuasRoute
   '/hadith': typeof HadithRoute
   '/prayer-times': typeof PrayerTimesRoute
@@ -122,6 +129,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/adhkar': typeof AdhkarRoute
   '/admin': typeof AdminRoute
+  '/asma': typeof AsmaRoute
   '/duas': typeof DuasRoute
   '/hadith': typeof HadithRoute
   '/prayer-times': typeof PrayerTimesRoute
@@ -140,6 +148,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/adhkar': typeof AdhkarRoute
   '/admin': typeof AdminRoute
+  '/asma': typeof AsmaRoute
   '/duas': typeof DuasRoute
   '/hadith': typeof HadithRoute
   '/prayer-times': typeof PrayerTimesRoute
@@ -159,6 +168,7 @@ export interface FileRouteTypes {
     | '/'
     | '/adhkar'
     | '/admin'
+    | '/asma'
     | '/duas'
     | '/hadith'
     | '/prayer-times'
@@ -176,6 +186,7 @@ export interface FileRouteTypes {
     | '/'
     | '/adhkar'
     | '/admin'
+    | '/asma'
     | '/duas'
     | '/hadith'
     | '/prayer-times'
@@ -193,6 +204,7 @@ export interface FileRouteTypes {
     | '/'
     | '/adhkar'
     | '/admin'
+    | '/asma'
     | '/duas'
     | '/hadith'
     | '/prayer-times'
@@ -211,6 +223,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdhkarRoute: typeof AdhkarRoute
   AdminRoute: typeof AdminRoute
+  AsmaRoute: typeof AsmaRoute
   DuasRoute: typeof DuasRoute
   HadithRoute: typeof HadithRoute
   PrayerTimesRoute: typeof PrayerTimesRoute
@@ -285,6 +298,13 @@ declare module '@tanstack/react-router' {
       path: '/duas'
       fullPath: '/duas'
       preLoaderRoute: typeof DuasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/asma': {
+      id: '/asma'
+      path: '/asma'
+      fullPath: '/asma'
+      preLoaderRoute: typeof AsmaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin': {
@@ -371,6 +391,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdhkarRoute: AdhkarRoute,
   AdminRoute: AdminRoute,
+  AsmaRoute: AsmaRoute,
   DuasRoute: DuasRoute,
   HadithRoute: HadithRoute,
   PrayerTimesRoute: PrayerTimesRoute,
@@ -384,13 +405,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
