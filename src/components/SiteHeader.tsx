@@ -12,8 +12,14 @@ const links = [
   { to: "/duas", label: "الأدعية" },
   { to: "/hadith", label: "الأحاديث" },
   { to: "/stories", label: "قصص الأنبياء" },
+  { to: "/seerah", label: "السيرة النبوية" },
+  { to: "/asma", label: "أسماء الله الحسنى" },
+  { to: "/ruqyah", label: "الرقية الشرعية" },
   { to: "/tasbih", label: "السبحة" },
   { to: "/prayer-times", label: "مواقيت الصلاة" },
+  { to: "/calendar", label: "التقويم الهجري" },
+  { to: "/zakat", label: "حاسبة الزكاة" },
+  { to: "/faraidh", label: "الفرائض" },
 ] as const;
 
 export function SiteHeader() {
