@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
-import { BookOpen, Radio, Sparkles, ScrollText, Quote, Users, CircleDot, Clock, Headphones, BookMarked } from "lucide-react";
+import { BookOpen, Radio, Sparkles, ScrollText, Quote, Users, CircleDot, Clock, Headphones, BookMarked, Star, Shield, HandCoins, Scale, CalendarDays, Milestone } from "lucide-react";
 import { NextPrayerWidget } from "@/components/NextPrayerWidget";
 import { InstallPWAButton } from "@/components/InstallPWAButton";
 
@@ -17,8 +17,14 @@ const features = [
   { to: "/duas", title: "الأدعية", desc: "مجموعة واسعة من الأدعية المأثورة", Icon: Quote },
   { to: "/hadith", title: "الأحاديث", desc: "أحاديث نبوية من صحيح البخاري ومسلم", Icon: ScrollText },
   { to: "/stories", title: "قصص الأنبياء", desc: "قصص الأنبياء عليهم السلام", Icon: Users },
+  { to: "/seerah", title: "السيرة النبوية", desc: "أحداث ومحطات من سيرة النبي ﷺ", Icon: Milestone },
+  { to: "/asma", title: "أسماء الله الحسنى", desc: "الأسماء التسعة والتسعون مع معانيها", Icon: Star },
+  { to: "/ruqyah", title: "الرقية الشرعية", desc: "من القرآن والسنة للحفظ والشفاء", Icon: Shield },
   { to: "/tasbih", title: "السبحة الإلكترونية", desc: "عدّاد ذكر إلكتروني بسيط", Icon: CircleDot },
   { to: "/prayer-times", title: "مواقيت الصلاة", desc: "مواقيت الصلاة حسب موقعك", Icon: Clock },
+  { to: "/calendar", title: "التقويم الهجري", desc: "التاريخ الهجري والميلادي", Icon: CalendarDays },
+  { to: "/zakat", title: "حاسبة الزكاة", desc: "احسب زكاة مالك وذهبك وتجارتك", Icon: HandCoins },
+  { to: "/faraidh", title: "الفرائض والمواريث", desc: "الميراث الشرعي وجدول الفروض", Icon: Scale },
 ] as const;
 
 function Index() {

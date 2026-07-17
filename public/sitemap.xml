@@ -11,4 +11,10 @@
   <url><loc>https://fayd.lovable.app/stories</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://fayd.lovable.app/tasbih</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
   <url><loc>https://fayd.lovable.app/prayer-times</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://fayd.lovable.app/seerah</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://fayd.lovable.app/asma</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fayd.lovable.app/ruqyah</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fayd.lovable.app/calendar</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://fayd.lovable.app/zakat</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://fayd.lovable.app/faraidh</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
 </urlset>
