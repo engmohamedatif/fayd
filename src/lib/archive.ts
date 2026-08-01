@@ -1,0 +1,58 @@
+export type ArchiveDoc = {
+  identifier: string;
+  title?: string;
+  creator?: string | string[];
+  year?: string;
+  downloads?: number;
+};
+
+const SEARCH = "https://archive.org/advancedsearch.php";
+
+export async function searchArchive(opts: {
+  query: string;
+  mediatype: "audio" | "texts";
+  rows?: number;
+  page?: number;
+}): Promise<{ docs: ArchiveDoc[]; total: number }> {
+  const params = new URLSearchParams({
+    q: `title:(${opts.query}) AND mediatype:${opts.mediatype} AND language:(Arabic OR ara OR العربية OR *)`,
+    rows: String(opts.rows ?? 20),
+    page: String(opts.page ?? 1),
+    output: "json",
+  });
+  params.append("sort[]", "downloads desc");
+  ["identifier", "title", "creator", "year", "downloads"].forEach((f) => params.append("fl[]", f));
+  const res = await fetch(`${SEARCH}?${params.toString()}`);
+  if (!res.ok) throw new Error("archive search failed");
+  const json = await res.json();
+  return { docs: json?.response?.docs ?? [], total: json?.response?.numFound ?? 0 };
+}
+
+export type ArchiveFile = { name: string; format?: string; length?: string; title?: string };
+
+export async function getArchiveFiles(identifier: string): Promise<ArchiveFile[]> {
+  const res = await fetch(`https://archive.org/metadata/${encodeURIComponent(identifier)}`);
+  if (!res.ok) throw new Error("archive metadata failed");
+  const json = await res.json();
+  return (json?.files ?? []) as ArchiveFile[];
+}
+
+export function audioFiles(files: ArchiveFile[]) {
+  return files.filter((f) => /\.(mp3|ogg|m4a)$/i.test(f.name));
+}
+
+export function textFiles(files: ArchiveFile[]) {
+  return files.filter((f) => /\.(pdf|epub|txt)$/i.test(f.name));
+}
+
+export function fileUrl(identifier: string, name: string) {
+  return `https://archive.org/download/${encodeURIComponent(identifier)}/${encodeURIComponent(name)}`;
+}
+
+export function itemUrl(identifier: string) {
+  return `https://archive.org/details/${encodeURIComponent(identifier)}`;
+}
+
+export function creatorOf(d: ArchiveDoc) {
+  return Array.isArray(d.creator) ? d.creator.join("، ") : d.creator ?? "غير محدد";
+}
