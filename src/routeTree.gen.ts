@@ -24,6 +24,7 @@ import { Route as HadithRouteImport } from './routes/hadith'
 import { Route as FaraidhRouteImport } from './routes/faraidh'
 import { Route as DuasRouteImport } from './routes/duas'
 import { Route as CalendarRouteImport } from './routes/calendar'
+import { Route as BooksRouteImport } from './routes/books'
 import { Route as AsmaRouteImport } from './routes/asma'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AdhkarRouteImport } from './routes/adhkar'
@@ -107,6 +108,11 @@ const CalendarRoute = CalendarRouteImport.update({
   path: '/calendar',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BooksRoute = BooksRouteImport.update({
+  id: '/books',
+  path: '/books',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AsmaRoute = AsmaRouteImport.update({
   id: '/asma',
   path: '/asma',
@@ -148,6 +154,7 @@ export interface FileRoutesByFullPath {
   '/adhkar': typeof AdhkarRoute
   '/admin': typeof AdminRoute
   '/asma': typeof AsmaRoute
+  '/books': typeof BooksRoute
   '/calendar': typeof CalendarRoute
   '/duas': typeof DuasRoute
   '/faraidh': typeof FaraidhRoute
@@ -172,6 +179,7 @@ export interface FileRoutesByTo {
   '/adhkar': typeof AdhkarRoute
   '/admin': typeof AdminRoute
   '/asma': typeof AsmaRoute
+  '/books': typeof BooksRoute
   '/calendar': typeof CalendarRoute
   '/duas': typeof DuasRoute
   '/faraidh': typeof FaraidhRoute
@@ -197,6 +205,7 @@ export interface FileRoutesById {
   '/adhkar': typeof AdhkarRoute
   '/admin': typeof AdminRoute
   '/asma': typeof AsmaRoute
+  '/books': typeof BooksRoute
   '/calendar': typeof CalendarRoute
   '/duas': typeof DuasRoute
   '/faraidh': typeof FaraidhRoute
@@ -223,6 +232,7 @@ export interface FileRouteTypes {
     | '/adhkar'
     | '/admin'
     | '/asma'
+    | '/books'
     | '/calendar'
     | '/duas'
     | '/faraidh'
@@ -247,6 +257,7 @@ export interface FileRouteTypes {
     | '/adhkar'
     | '/admin'
     | '/asma'
+    | '/books'
     | '/calendar'
     | '/duas'
     | '/faraidh'
@@ -271,6 +282,7 @@ export interface FileRouteTypes {
     | '/adhkar'
     | '/admin'
     | '/asma'
+    | '/books'
     | '/calendar'
     | '/duas'
     | '/faraidh'
@@ -296,6 +308,7 @@ export interface RootRouteChildren {
   AdhkarRoute: typeof AdhkarRoute
   AdminRoute: typeof AdminRoute
   AsmaRoute: typeof AsmaRoute
+  BooksRoute: typeof BooksRoute
   CalendarRoute: typeof CalendarRoute
   DuasRoute: typeof DuasRoute
   FaraidhRoute: typeof FaraidhRoute
@@ -420,6 +433,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CalendarRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/books': {
+      id: '/books'
+      path: '/books'
+      fullPath: '/books'
+      preLoaderRoute: typeof BooksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/asma': {
       id: '/asma'
       path: '/asma'
@@ -512,6 +532,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdhkarRoute: AdhkarRoute,
   AdminRoute: AdminRoute,
   AsmaRoute: AsmaRoute,
+  BooksRoute: BooksRoute,
   CalendarRoute: CalendarRoute,
   DuasRoute: DuasRoute,
   FaraidhRoute: FaraidhRoute,
