@@ -19,6 +19,7 @@ import { Route as RadioRouteImport } from './routes/radio'
 import { Route as QuranReadRouteImport } from './routes/quran-read'
 import { Route as QuranListenRouteImport } from './routes/quran-listen'
 import { Route as PrayerTimesRouteImport } from './routes/prayer-times'
+import { Route as LecturesRouteImport } from './routes/lectures'
 import { Route as HadithRouteImport } from './routes/hadith'
 import { Route as FaraidhRouteImport } from './routes/faraidh'
 import { Route as DuasRouteImport } from './routes/duas'
@@ -79,6 +80,11 @@ const QuranListenRoute = QuranListenRouteImport.update({
 const PrayerTimesRoute = PrayerTimesRouteImport.update({
   id: '/prayer-times',
   path: '/prayer-times',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LecturesRoute = LecturesRouteImport.update({
+  id: '/lectures',
+  path: '/lectures',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HadithRoute = HadithRouteImport.update({
@@ -146,6 +152,7 @@ export interface FileRoutesByFullPath {
   '/duas': typeof DuasRoute
   '/faraidh': typeof FaraidhRoute
   '/hadith': typeof HadithRoute
+  '/lectures': typeof LecturesRoute
   '/prayer-times': typeof PrayerTimesRoute
   '/quran-listen': typeof QuranListenRouteWithChildren
   '/quran-read': typeof QuranReadRouteWithChildren
@@ -169,6 +176,7 @@ export interface FileRoutesByTo {
   '/duas': typeof DuasRoute
   '/faraidh': typeof FaraidhRoute
   '/hadith': typeof HadithRoute
+  '/lectures': typeof LecturesRoute
   '/prayer-times': typeof PrayerTimesRoute
   '/quran-listen': typeof QuranListenRouteWithChildren
   '/quran-read': typeof QuranReadRouteWithChildren
@@ -193,6 +201,7 @@ export interface FileRoutesById {
   '/duas': typeof DuasRoute
   '/faraidh': typeof FaraidhRoute
   '/hadith': typeof HadithRoute
+  '/lectures': typeof LecturesRoute
   '/prayer-times': typeof PrayerTimesRoute
   '/quran-listen': typeof QuranListenRouteWithChildren
   '/quran-read': typeof QuranReadRouteWithChildren
@@ -218,6 +227,7 @@ export interface FileRouteTypes {
     | '/duas'
     | '/faraidh'
     | '/hadith'
+    | '/lectures'
     | '/prayer-times'
     | '/quran-listen'
     | '/quran-read'
@@ -241,6 +251,7 @@ export interface FileRouteTypes {
     | '/duas'
     | '/faraidh'
     | '/hadith'
+    | '/lectures'
     | '/prayer-times'
     | '/quran-listen'
     | '/quran-read'
@@ -264,6 +275,7 @@ export interface FileRouteTypes {
     | '/duas'
     | '/faraidh'
     | '/hadith'
+    | '/lectures'
     | '/prayer-times'
     | '/quran-listen'
     | '/quran-read'
@@ -288,6 +300,7 @@ export interface RootRouteChildren {
   DuasRoute: typeof DuasRoute
   FaraidhRoute: typeof FaraidhRoute
   HadithRoute: typeof HadithRoute
+  LecturesRoute: typeof LecturesRoute
   PrayerTimesRoute: typeof PrayerTimesRoute
   QuranListenRoute: typeof QuranListenRouteWithChildren
   QuranReadRoute: typeof QuranReadRouteWithChildren
@@ -370,6 +383,13 @@ declare module '@tanstack/react-router' {
       path: '/prayer-times'
       fullPath: '/prayer-times'
       preLoaderRoute: typeof PrayerTimesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lectures': {
+      id: '/lectures'
+      path: '/lectures'
+      fullPath: '/lectures'
+      preLoaderRoute: typeof LecturesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/hadith': {
@@ -496,6 +516,7 @@ const rootRouteChildren: RootRouteChildren = {
   DuasRoute: DuasRoute,
   FaraidhRoute: FaraidhRoute,
   HadithRoute: HadithRoute,
+  LecturesRoute: LecturesRoute,
   PrayerTimesRoute: PrayerTimesRoute,
   QuranListenRoute: QuranListenRouteWithChildren,
   QuranReadRoute: QuranReadRouteWithChildren,
