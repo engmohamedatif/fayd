@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Copy, Check } from "lucide-react";
+import { ArchiveBrowser } from "@/components/ArchiveBrowser";
 
 export const Route = createFileRoute("/ruqyah")({
   head: () => ({
@@ -44,6 +45,7 @@ const SECTIONS: { title: string; intro?: string; items: Item[] }[] = [
 
 function RuqyahPage() {
   const [copied, setCopied] = useState<string | null>(null);
+  const [tab, setTab] = useState<"text" | "audio">("text");
   const copy = async (t: string, id: string) => {
     try {
       await navigator.clipboard.writeText(t);
@@ -59,7 +61,30 @@ function RuqyahPage() {
         <p className="text-muted-foreground text-sm">من كتاب الله وسنة رسوله ﷺ — تُقرأ على النفس أو المريض بيقين وإخلاص.</p>
       </header>
 
-      {SECTIONS.map((sec) => (
+      <div className="flex justify-center gap-2">
+        {(["text", "audio"] as const).map((t) => (
+          <button
+            key={t}
+            onClick={() => setTab(t)}
+            className={`rounded-full px-5 py-2 text-sm font-bold border border-border transition ${
+              tab === t ? "bg-foreground text-background" : "md:hover:bg-muted"
+            }`}
+          >
+            {t === "text" ? "مقروءة" : "مسموعة"}
+          </button>
+        ))}
+      </div>
+
+      {tab === "audio" && (
+        <ArchiveBrowser
+          topics={["الرقية الشرعية", "رقية العين والحسد", "رقية السحر", "الرقية الشرعية ياسر الدوسري", "رقية المس", "آيات الشفاء"].map(
+            (q) => ({ label: q, query: q }),
+          )}
+          mediatype="audio"
+        />
+      )}
+
+      {tab === "text" && SECTIONS.map((sec) => (
         <section key={sec.title} className="space-y-4">
           <h2 className="text-xl font-bold border-b border-border pb-2">{sec.title}</h2>
           {sec.intro && <p className="text-muted-foreground text-sm">{sec.intro}</p>}
