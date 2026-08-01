@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ZakatRouteImport } from './routes/zakat'
 import { Route as TasbihRouteImport } from './routes/tasbih'
+import { Route as TajweedRouteImport } from './routes/tajweed'
 import { Route as TafsirRouteImport } from './routes/tafsir'
 import { Route as StoriesRouteImport } from './routes/stories'
 import { Route as SeerahRouteImport } from './routes/seerah'
@@ -19,10 +20,13 @@ import { Route as RadioRouteImport } from './routes/radio'
 import { Route as QuranReadRouteImport } from './routes/quran-read'
 import { Route as QuranListenRouteImport } from './routes/quran-listen'
 import { Route as PrayerTimesRouteImport } from './routes/prayer-times'
+import { Route as LecturesRouteImport } from './routes/lectures'
 import { Route as HadithRouteImport } from './routes/hadith'
+import { Route as FatwaRouteImport } from './routes/fatwa'
 import { Route as FaraidhRouteImport } from './routes/faraidh'
 import { Route as DuasRouteImport } from './routes/duas'
 import { Route as CalendarRouteImport } from './routes/calendar'
+import { Route as BooksRouteImport } from './routes/books'
 import { Route as AsmaRouteImport } from './routes/asma'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AdhkarRouteImport } from './routes/adhkar'
@@ -39,6 +43,11 @@ const ZakatRoute = ZakatRouteImport.update({
 const TasbihRoute = TasbihRouteImport.update({
   id: '/tasbih',
   path: '/tasbih',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TajweedRoute = TajweedRouteImport.update({
+  id: '/tajweed',
+  path: '/tajweed',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TafsirRoute = TafsirRouteImport.update({
@@ -81,9 +90,19 @@ const PrayerTimesRoute = PrayerTimesRouteImport.update({
   path: '/prayer-times',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LecturesRoute = LecturesRouteImport.update({
+  id: '/lectures',
+  path: '/lectures',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HadithRoute = HadithRouteImport.update({
   id: '/hadith',
   path: '/hadith',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FatwaRoute = FatwaRouteImport.update({
+  id: '/fatwa',
+  path: '/fatwa',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FaraidhRoute = FaraidhRouteImport.update({
@@ -99,6 +118,11 @@ const DuasRoute = DuasRouteImport.update({
 const CalendarRoute = CalendarRouteImport.update({
   id: '/calendar',
   path: '/calendar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BooksRoute = BooksRouteImport.update({
+  id: '/books',
+  path: '/books',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AsmaRoute = AsmaRouteImport.update({
@@ -142,10 +166,13 @@ export interface FileRoutesByFullPath {
   '/adhkar': typeof AdhkarRoute
   '/admin': typeof AdminRoute
   '/asma': typeof AsmaRoute
+  '/books': typeof BooksRoute
   '/calendar': typeof CalendarRoute
   '/duas': typeof DuasRoute
   '/faraidh': typeof FaraidhRoute
+  '/fatwa': typeof FatwaRoute
   '/hadith': typeof HadithRoute
+  '/lectures': typeof LecturesRoute
   '/prayer-times': typeof PrayerTimesRoute
   '/quran-listen': typeof QuranListenRouteWithChildren
   '/quran-read': typeof QuranReadRouteWithChildren
@@ -154,6 +181,7 @@ export interface FileRoutesByFullPath {
   '/seerah': typeof SeerahRoute
   '/stories': typeof StoriesRoute
   '/tafsir': typeof TafsirRouteWithChildren
+  '/tajweed': typeof TajweedRoute
   '/tasbih': typeof TasbihRoute
   '/zakat': typeof ZakatRoute
   '/quran-listen/$reciter': typeof QuranListenReciterRoute
@@ -165,10 +193,13 @@ export interface FileRoutesByTo {
   '/adhkar': typeof AdhkarRoute
   '/admin': typeof AdminRoute
   '/asma': typeof AsmaRoute
+  '/books': typeof BooksRoute
   '/calendar': typeof CalendarRoute
   '/duas': typeof DuasRoute
   '/faraidh': typeof FaraidhRoute
+  '/fatwa': typeof FatwaRoute
   '/hadith': typeof HadithRoute
+  '/lectures': typeof LecturesRoute
   '/prayer-times': typeof PrayerTimesRoute
   '/quran-listen': typeof QuranListenRouteWithChildren
   '/quran-read': typeof QuranReadRouteWithChildren
@@ -177,6 +208,7 @@ export interface FileRoutesByTo {
   '/seerah': typeof SeerahRoute
   '/stories': typeof StoriesRoute
   '/tafsir': typeof TafsirRouteWithChildren
+  '/tajweed': typeof TajweedRoute
   '/tasbih': typeof TasbihRoute
   '/zakat': typeof ZakatRoute
   '/quran-listen/$reciter': typeof QuranListenReciterRoute
@@ -189,10 +221,13 @@ export interface FileRoutesById {
   '/adhkar': typeof AdhkarRoute
   '/admin': typeof AdminRoute
   '/asma': typeof AsmaRoute
+  '/books': typeof BooksRoute
   '/calendar': typeof CalendarRoute
   '/duas': typeof DuasRoute
   '/faraidh': typeof FaraidhRoute
+  '/fatwa': typeof FatwaRoute
   '/hadith': typeof HadithRoute
+  '/lectures': typeof LecturesRoute
   '/prayer-times': typeof PrayerTimesRoute
   '/quran-listen': typeof QuranListenRouteWithChildren
   '/quran-read': typeof QuranReadRouteWithChildren
@@ -201,6 +236,7 @@ export interface FileRoutesById {
   '/seerah': typeof SeerahRoute
   '/stories': typeof StoriesRoute
   '/tafsir': typeof TafsirRouteWithChildren
+  '/tajweed': typeof TajweedRoute
   '/tasbih': typeof TasbihRoute
   '/zakat': typeof ZakatRoute
   '/quran-listen/$reciter': typeof QuranListenReciterRoute
@@ -214,10 +250,13 @@ export interface FileRouteTypes {
     | '/adhkar'
     | '/admin'
     | '/asma'
+    | '/books'
     | '/calendar'
     | '/duas'
     | '/faraidh'
+    | '/fatwa'
     | '/hadith'
+    | '/lectures'
     | '/prayer-times'
     | '/quran-listen'
     | '/quran-read'
@@ -226,6 +265,7 @@ export interface FileRouteTypes {
     | '/seerah'
     | '/stories'
     | '/tafsir'
+    | '/tajweed'
     | '/tasbih'
     | '/zakat'
     | '/quran-listen/$reciter'
@@ -237,10 +277,13 @@ export interface FileRouteTypes {
     | '/adhkar'
     | '/admin'
     | '/asma'
+    | '/books'
     | '/calendar'
     | '/duas'
     | '/faraidh'
+    | '/fatwa'
     | '/hadith'
+    | '/lectures'
     | '/prayer-times'
     | '/quran-listen'
     | '/quran-read'
@@ -249,6 +292,7 @@ export interface FileRouteTypes {
     | '/seerah'
     | '/stories'
     | '/tafsir'
+    | '/tajweed'
     | '/tasbih'
     | '/zakat'
     | '/quran-listen/$reciter'
@@ -260,10 +304,13 @@ export interface FileRouteTypes {
     | '/adhkar'
     | '/admin'
     | '/asma'
+    | '/books'
     | '/calendar'
     | '/duas'
     | '/faraidh'
+    | '/fatwa'
     | '/hadith'
+    | '/lectures'
     | '/prayer-times'
     | '/quran-listen'
     | '/quran-read'
@@ -272,6 +319,7 @@ export interface FileRouteTypes {
     | '/seerah'
     | '/stories'
     | '/tafsir'
+    | '/tajweed'
     | '/tasbih'
     | '/zakat'
     | '/quran-listen/$reciter'
@@ -284,10 +332,13 @@ export interface RootRouteChildren {
   AdhkarRoute: typeof AdhkarRoute
   AdminRoute: typeof AdminRoute
   AsmaRoute: typeof AsmaRoute
+  BooksRoute: typeof BooksRoute
   CalendarRoute: typeof CalendarRoute
   DuasRoute: typeof DuasRoute
   FaraidhRoute: typeof FaraidhRoute
+  FatwaRoute: typeof FatwaRoute
   HadithRoute: typeof HadithRoute
+  LecturesRoute: typeof LecturesRoute
   PrayerTimesRoute: typeof PrayerTimesRoute
   QuranListenRoute: typeof QuranListenRouteWithChildren
   QuranReadRoute: typeof QuranReadRouteWithChildren
@@ -296,6 +347,7 @@ export interface RootRouteChildren {
   SeerahRoute: typeof SeerahRoute
   StoriesRoute: typeof StoriesRoute
   TafsirRoute: typeof TafsirRouteWithChildren
+  TajweedRoute: typeof TajweedRoute
   TasbihRoute: typeof TasbihRoute
   ZakatRoute: typeof ZakatRoute
 }
@@ -314,6 +366,13 @@ declare module '@tanstack/react-router' {
       path: '/tasbih'
       fullPath: '/tasbih'
       preLoaderRoute: typeof TasbihRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tajweed': {
+      id: '/tajweed'
+      path: '/tajweed'
+      fullPath: '/tajweed'
+      preLoaderRoute: typeof TajweedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tafsir': {
@@ -372,11 +431,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrayerTimesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/lectures': {
+      id: '/lectures'
+      path: '/lectures'
+      fullPath: '/lectures'
+      preLoaderRoute: typeof LecturesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/hadith': {
       id: '/hadith'
       path: '/hadith'
       fullPath: '/hadith'
       preLoaderRoute: typeof HadithRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/fatwa': {
+      id: '/fatwa'
+      path: '/fatwa'
+      fullPath: '/fatwa'
+      preLoaderRoute: typeof FatwaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/faraidh': {
@@ -398,6 +471,13 @@ declare module '@tanstack/react-router' {
       path: '/calendar'
       fullPath: '/calendar'
       preLoaderRoute: typeof CalendarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/books': {
+      id: '/books'
+      path: '/books'
+      fullPath: '/books'
+      preLoaderRoute: typeof BooksRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/asma': {
@@ -492,10 +572,13 @@ const rootRouteChildren: RootRouteChildren = {
   AdhkarRoute: AdhkarRoute,
   AdminRoute: AdminRoute,
   AsmaRoute: AsmaRoute,
+  BooksRoute: BooksRoute,
   CalendarRoute: CalendarRoute,
   DuasRoute: DuasRoute,
   FaraidhRoute: FaraidhRoute,
+  FatwaRoute: FatwaRoute,
   HadithRoute: HadithRoute,
+  LecturesRoute: LecturesRoute,
   PrayerTimesRoute: PrayerTimesRoute,
   QuranListenRoute: QuranListenRouteWithChildren,
   QuranReadRoute: QuranReadRouteWithChildren,
@@ -504,6 +587,7 @@ const rootRouteChildren: RootRouteChildren = {
   SeerahRoute: SeerahRoute,
   StoriesRoute: StoriesRoute,
   TafsirRoute: TafsirRouteWithChildren,
+  TajweedRoute: TajweedRoute,
   TasbihRoute: TasbihRoute,
   ZakatRoute: ZakatRoute,
 }
