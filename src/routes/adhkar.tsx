@@ -1,22 +1,22 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { Plus, Minus, RotateCcw, ChevronLeft } from "lucide-react";
+import { Plus, Minus, RotateCcw, ChevronLeft, Search } from "lucide-react";
+import { AudioPlayer } from "@/components/AudioPlayer";
 
 export const Route = createFileRoute("/adhkar")({
   head: () => ({ meta: [{ title: "الأذكار - فيض" }, { name: "description", content: "أذكار الصباح والمساء وأذكار متنوعة من حصن المسلم." }] }),
   component: AdhkarPage,
 });
 
-type CatItem = { ID: number; TITLE: string; TEXT: string };
+type CatItem = { ID: number; TITLE: string; TEXT: string; AUDIO_URL?: string };
 type Zekr = { ID: number; ARABIC_TEXT: string; REPEAT: number | string };
-
-const filterKeywords = ["ذكر", "أذكار", "الصباح", "المساء", "النوم", "الاستيقاظ", "الصلاة", "الوضوء", "الأذان", "التسبيح", "الاستغفار"];
 
 function AdhkarPage() {
   const [cats, setCats] = useState<CatItem[] | null>(null);
   const [selected, setSelected] = useState<CatItem | null>(null);
   const [items, setItems] = useState<Zekr[] | null>(null);
   const [err, setErr] = useState<string | null>(null);
+  const [q, setQ] = useState("");
 
   useEffect(() => {
     fetch("https://www.hisnmuslim.com/api/ar/husn_ar.json")
@@ -27,8 +27,9 @@ function AdhkarPage() {
 
   const filtered = useMemo(() => {
     if (!cats) return null;
-    return cats.filter((c) => filterKeywords.some((k) => c.TITLE.includes(k)));
-  }, [cats]);
+    const term = q.trim();
+    return term ? cats.filter((c) => c.TITLE.includes(term)) : cats;
+  }, [cats, q]);
 
   useEffect(() => {
     if (!selected) return;
@@ -50,9 +51,15 @@ function AdhkarPage() {
           <ChevronLeft className="h-4 w-4 rotate-180" /> رجوع
         </button>
         <h1 className="text-2xl md:text-3xl font-extrabold text-center">{selected.TITLE}</h1>
+        {selected.AUDIO_URL && (
+          <AudioPlayer src={selected.AUDIO_URL.replace("http://", "https://")} title={selected.TITLE} subtitle="استماع — حصن المسلم" />
+        )}
         {!items && <div className="text-center py-6">جاري التحميل...</div>}
         <div className="space-y-3">
           {items?.map((z) => <ZekrCard key={z.ID} z={z} />)}
+        </div>
+        <div className="text-xs text-muted-foreground text-center pt-3 border-t border-border">
+          المرجع: كتاب حصن المسلم — سعيد بن علي بن وهف القحطاني (hisnmuslim.com).
         </div>
       </div>
     );
@@ -61,7 +68,16 @@ function AdhkarPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 space-y-6">
       <h1 className="text-2xl md:text-3xl font-extrabold text-center">الأذكار</h1>
-      <p className="text-center text-sm text-muted-foreground">من حصن المسلم — {filtered.length} قسم</p>
+      <p className="text-center text-sm text-muted-foreground">حصن المسلم كاملاً — {filtered.length} قسم، مع إمكانية الاستماع.</p>
+      <div className="relative max-w-md mx-auto">
+        <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+        <input
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          placeholder="ابحث في الأقسام..."
+          className="w-full rounded-full border border-border bg-card py-2.5 pr-10 pl-4 text-sm outline-none focus:border-foreground"
+        />
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
         {filtered.map((c) => (
           <button key={c.ID} onClick={() => setSelected(c)} className="text-right rounded-2xl border border-border p-4 md:hover:bg-foreground md:hover:text-background transition">
