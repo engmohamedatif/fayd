@@ -21,6 +21,7 @@ import { Route as QuranListenRouteImport } from './routes/quran-listen'
 import { Route as PrayerTimesRouteImport } from './routes/prayer-times'
 import { Route as LecturesRouteImport } from './routes/lectures'
 import { Route as HadithRouteImport } from './routes/hadith'
+import { Route as FatwaRouteImport } from './routes/fatwa'
 import { Route as FaraidhRouteImport } from './routes/faraidh'
 import { Route as DuasRouteImport } from './routes/duas'
 import { Route as CalendarRouteImport } from './routes/calendar'
@@ -93,6 +94,11 @@ const HadithRoute = HadithRouteImport.update({
   path: '/hadith',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FatwaRoute = FatwaRouteImport.update({
+  id: '/fatwa',
+  path: '/fatwa',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FaraidhRoute = FaraidhRouteImport.update({
   id: '/faraidh',
   path: '/faraidh',
@@ -158,6 +164,7 @@ export interface FileRoutesByFullPath {
   '/calendar': typeof CalendarRoute
   '/duas': typeof DuasRoute
   '/faraidh': typeof FaraidhRoute
+  '/fatwa': typeof FatwaRoute
   '/hadith': typeof HadithRoute
   '/lectures': typeof LecturesRoute
   '/prayer-times': typeof PrayerTimesRoute
@@ -183,6 +190,7 @@ export interface FileRoutesByTo {
   '/calendar': typeof CalendarRoute
   '/duas': typeof DuasRoute
   '/faraidh': typeof FaraidhRoute
+  '/fatwa': typeof FatwaRoute
   '/hadith': typeof HadithRoute
   '/lectures': typeof LecturesRoute
   '/prayer-times': typeof PrayerTimesRoute
@@ -209,6 +217,7 @@ export interface FileRoutesById {
   '/calendar': typeof CalendarRoute
   '/duas': typeof DuasRoute
   '/faraidh': typeof FaraidhRoute
+  '/fatwa': typeof FatwaRoute
   '/hadith': typeof HadithRoute
   '/lectures': typeof LecturesRoute
   '/prayer-times': typeof PrayerTimesRoute
@@ -236,6 +245,7 @@ export interface FileRouteTypes {
     | '/calendar'
     | '/duas'
     | '/faraidh'
+    | '/fatwa'
     | '/hadith'
     | '/lectures'
     | '/prayer-times'
@@ -261,6 +271,7 @@ export interface FileRouteTypes {
     | '/calendar'
     | '/duas'
     | '/faraidh'
+    | '/fatwa'
     | '/hadith'
     | '/lectures'
     | '/prayer-times'
@@ -286,6 +297,7 @@ export interface FileRouteTypes {
     | '/calendar'
     | '/duas'
     | '/faraidh'
+    | '/fatwa'
     | '/hadith'
     | '/lectures'
     | '/prayer-times'
@@ -312,6 +324,7 @@ export interface RootRouteChildren {
   CalendarRoute: typeof CalendarRoute
   DuasRoute: typeof DuasRoute
   FaraidhRoute: typeof FaraidhRoute
+  FatwaRoute: typeof FatwaRoute
   HadithRoute: typeof HadithRoute
   LecturesRoute: typeof LecturesRoute
   PrayerTimesRoute: typeof PrayerTimesRoute
@@ -410,6 +423,13 @@ declare module '@tanstack/react-router' {
       path: '/hadith'
       fullPath: '/hadith'
       preLoaderRoute: typeof HadithRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/fatwa': {
+      id: '/fatwa'
+      path: '/fatwa'
+      fullPath: '/fatwa'
+      preLoaderRoute: typeof FatwaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/faraidh': {
@@ -536,6 +556,7 @@ const rootRouteChildren: RootRouteChildren = {
   CalendarRoute: CalendarRoute,
   DuasRoute: DuasRoute,
   FaraidhRoute: FaraidhRoute,
+  FatwaRoute: FatwaRoute,
   HadithRoute: HadithRoute,
   LecturesRoute: LecturesRoute,
   PrayerTimesRoute: PrayerTimesRoute,
