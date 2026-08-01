@@ -17,4 +17,8 @@
   <url><loc>https://fayd.lovable.app/calendar</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
   <url><loc>https://fayd.lovable.app/zakat</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
   <url><loc>https://fayd.lovable.app/faraidh</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://fayd.lovable.app/lectures</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://fayd.lovable.app/tajweed</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://fayd.lovable.app/fatwa</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://fayd.lovable.app/books</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
 </urlset>
