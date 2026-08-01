@@ -39,21 +39,61 @@ const TOPICS: { title: string; slug: string }[] = [
 
 type Summary = { extract: string; thumbnail?: { source: string }; content_urls?: { desktop: { page: string } } };
 
+function stripHtml(html: string) {
+  return html
+    .replace(/<style[\s\S]*?<\/style>/gi, "")
+    .replace(/<table[\s\S]*?<\/table>/gi, "")
+    .replace(/<h(\d)[^>]*>([\s\S]*?)<\/h\1>/gi, "\n\n■ $2\n")
+    .replace(/<\/p>/gi, "\n\n")
+    .replace(/<li[^>]*>/gi, "• ")
+    .replace(/<\/li>/gi, "\n")
+    .replace(/<[^>]+>/g, "")
+    .replace(/\[\d+\]/g, "")
+    .replace(/&#\d+;|&[a-z]+;/gi, " ")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
 function SeerahPage() {
   const [selected, setSelected] = useState(TOPICS[0]);
   const [data, setData] = useState<Summary | null>(null);
+  const [full, setFull] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState<string | null>(null);
 
   useEffect(() => {
+    let alive = true;
     setLoading(true);
     setErr(null);
     setData(null);
+    setFull(null);
     fetch(`https://ar.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(selected.slug)}`)
       .then((r) => r.json())
-      .then((j) => setData(j))
-      .catch(() => setErr("تعذّر التحميل"))
-      .finally(() => setLoading(false));
+      .then((j) => alive && setData(j))
+      .catch(() => alive && setErr("تعذّر التحميل"))
+      .finally(() => alive && setLoading(false));
+
+    const params = new URLSearchParams({
+      action: "query",
+      prop: "extracts",
+      titles: selected.slug.replace(/_/g, " "),
+      explaintext: "1",
+      format: "json",
+      origin: "*",
+      redirects: "1",
+    });
+    fetch(`https://ar.wikipedia.org/w/api.php?${params.toString()}`)
+      .then((r) => r.json())
+      .then((j) => {
+        if (!alive) return;
+        const pages = j?.query?.pages ?? {};
+        const first = Object.values(pages)[0] as { extract?: string } | undefined;
+        setFull(first?.extract ? stripHtml(first.extract) : null);
+      })
+      .catch(() => alive && setFull(null));
+    return () => {
+      alive = false;
+    };
   }, [selected]);
 
   return (
@@ -81,7 +121,7 @@ function SeerahPage() {
             {data.thumbnail && (
               <img src={data.thumbnail.source} alt={selected.title} className="rounded-xl max-h-64 object-cover mx-auto" />
             )}
-            <p className="leading-loose text-lg whitespace-pre-wrap">{data.extract}</p>
+            <p className="leading-loose text-lg whitespace-pre-wrap">{full ?? data.extract}</p>
             {data.content_urls && (
               <a
                 href={data.content_urls.desktop.page}

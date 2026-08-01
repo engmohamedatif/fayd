@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ZakatRouteImport } from './routes/zakat'
 import { Route as TasbihRouteImport } from './routes/tasbih'
+import { Route as TajweedRouteImport } from './routes/tajweed'
 import { Route as TafsirRouteImport } from './routes/tafsir'
 import { Route as StoriesRouteImport } from './routes/stories'
 import { Route as SeerahRouteImport } from './routes/seerah'
@@ -42,6 +43,11 @@ const ZakatRoute = ZakatRouteImport.update({
 const TasbihRoute = TasbihRouteImport.update({
   id: '/tasbih',
   path: '/tasbih',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TajweedRoute = TajweedRouteImport.update({
+  id: '/tajweed',
+  path: '/tajweed',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TafsirRoute = TafsirRouteImport.update({
@@ -175,6 +181,7 @@ export interface FileRoutesByFullPath {
   '/seerah': typeof SeerahRoute
   '/stories': typeof StoriesRoute
   '/tafsir': typeof TafsirRouteWithChildren
+  '/tajweed': typeof TajweedRoute
   '/tasbih': typeof TasbihRoute
   '/zakat': typeof ZakatRoute
   '/quran-listen/$reciter': typeof QuranListenReciterRoute
@@ -201,6 +208,7 @@ export interface FileRoutesByTo {
   '/seerah': typeof SeerahRoute
   '/stories': typeof StoriesRoute
   '/tafsir': typeof TafsirRouteWithChildren
+  '/tajweed': typeof TajweedRoute
   '/tasbih': typeof TasbihRoute
   '/zakat': typeof ZakatRoute
   '/quran-listen/$reciter': typeof QuranListenReciterRoute
@@ -228,6 +236,7 @@ export interface FileRoutesById {
   '/seerah': typeof SeerahRoute
   '/stories': typeof StoriesRoute
   '/tafsir': typeof TafsirRouteWithChildren
+  '/tajweed': typeof TajweedRoute
   '/tasbih': typeof TasbihRoute
   '/zakat': typeof ZakatRoute
   '/quran-listen/$reciter': typeof QuranListenReciterRoute
@@ -256,6 +265,7 @@ export interface FileRouteTypes {
     | '/seerah'
     | '/stories'
     | '/tafsir'
+    | '/tajweed'
     | '/tasbih'
     | '/zakat'
     | '/quran-listen/$reciter'
@@ -282,6 +292,7 @@ export interface FileRouteTypes {
     | '/seerah'
     | '/stories'
     | '/tafsir'
+    | '/tajweed'
     | '/tasbih'
     | '/zakat'
     | '/quran-listen/$reciter'
@@ -308,6 +319,7 @@ export interface FileRouteTypes {
     | '/seerah'
     | '/stories'
     | '/tafsir'
+    | '/tajweed'
     | '/tasbih'
     | '/zakat'
     | '/quran-listen/$reciter'
@@ -335,6 +347,7 @@ export interface RootRouteChildren {
   SeerahRoute: typeof SeerahRoute
   StoriesRoute: typeof StoriesRoute
   TafsirRoute: typeof TafsirRouteWithChildren
+  TajweedRoute: typeof TajweedRoute
   TasbihRoute: typeof TasbihRoute
   ZakatRoute: typeof ZakatRoute
 }
@@ -353,6 +366,13 @@ declare module '@tanstack/react-router' {
       path: '/tasbih'
       fullPath: '/tasbih'
       preLoaderRoute: typeof TasbihRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tajweed': {
+      id: '/tajweed'
+      path: '/tajweed'
+      fullPath: '/tajweed'
+      preLoaderRoute: typeof TajweedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tafsir': {
@@ -567,6 +587,7 @@ const rootRouteChildren: RootRouteChildren = {
   SeerahRoute: SeerahRoute,
   StoriesRoute: StoriesRoute,
   TafsirRoute: TafsirRouteWithChildren,
+  TajweedRoute: TajweedRoute,
   TasbihRoute: TasbihRoute,
   ZakatRoute: ZakatRoute,
 }
