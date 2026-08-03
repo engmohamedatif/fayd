@@ -59,7 +59,7 @@ function AdhkarPage() {
           {items?.map((z) => <ZekrCard key={z.ID} z={z} />)}
         </div>
         <div className="text-xs text-muted-foreground text-center pt-3 border-t border-border">
-          المرجع: كتاب حصن المسلم — سعيد بن علي بن وهف القحطاني (hisnmuslim.com).
+          من كتاب حصن المسلم.
         </div>
       </div>
     );

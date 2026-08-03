@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { ExternalLink } from "lucide-react";
+import { cleanText } from "@/lib/media";
 
 export const Route = createFileRoute("/seerah")({
   head: () => ({
@@ -121,20 +121,9 @@ function SeerahPage() {
             {data.thumbnail && (
               <img src={data.thumbnail.source} alt={selected.title} className="rounded-xl max-h-64 object-cover mx-auto" />
             )}
-            <p className="leading-loose text-lg whitespace-pre-wrap">{full ?? data.extract}</p>
-            {data.content_urls && (
-              <a
-                href={data.content_urls.desktop.page}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 text-sm rounded-full border border-border px-4 py-2 hover:bg-muted"
-              >
-                <ExternalLink className="h-4 w-4" /> اقرأ المقال كاملاً على ويكيبيديا
-              </a>
-            )}
-            <div className="text-xs text-muted-foreground pt-2 border-t border-border">
-              المصدر: موسوعة ويكيبيديا العربية — محتوى مُرخّص بموجب CC BY-SA.
-            </div>
+            <p className="leading-loose text-lg whitespace-pre-wrap animate-in fade-in duration-300">
+              {cleanText(full ?? data.extract)}
+            </p>
           </>
         )}
       </article>

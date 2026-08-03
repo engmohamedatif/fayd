@@ -6,9 +6,9 @@ export const Route = createFileRoute("/fatwa")({
   head: () => ({
     meta: [
       { title: "الفتاوى وسؤال وجواب - فيض" },
-      { name: "description", content: "فتاوى كبار العلماء صوتية ومكتوبة مع توثيق المرجع لكل فتوى." },
+      { name: "description", content: "فتاوى كبار العلماء صوتية ومكتوبة مع إمكانية القراءة والتحميل." },
       { property: "og:title", content: "الفتاوى وسؤال وجواب - فيض" },
-      { property: "og:description", content: "فتاوى موثقة صوتية ومكتوبة لكبار أهل العلم." },
+      { property: "og:description", content: "فتاوى صوتية ومكتوبة لكبار أهل العلم." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -43,16 +43,16 @@ function FatwaPage() {
       <header className="text-center space-y-2">
         <h1 className="text-3xl md:text-4xl font-extrabold">الفتاوى وسؤال وجواب</h1>
         <p className="text-muted-foreground text-sm">
-          فتاوى مسموعة ومقروءة لكبار أهل العلم، مع رابط المرجع الأصلي لكل مادة. عند اختلاف الفتوى استشر أهل العلم في بلدك.
+          فتاوى مسموعة ومقروءة لكبار أهل العلم، تُقرأ وتُحمَّل من داخل التطبيق. عند اختلاف الفتوى استشر أهل العلم في بلدك.
         </p>
       </header>
 
-      <div className="flex justify-center gap-2">
+      <div className="mx-auto flex w-fit overflow-hidden rounded-full border border-border bg-card">
         {(["audio", "texts"] as const).map((t) => (
           <button
             key={t}
             onClick={() => setTab(t)}
-            className={`rounded-full px-5 py-2 text-sm font-bold border border-border transition ${
+            className={`px-6 py-2 text-sm font-bold transition-all duration-300 border-l border-border last:border-l-0 ${
               tab === t ? "bg-foreground text-background" : "md:hover:bg-muted"
             }`}
           >

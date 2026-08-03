@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Play, Pause, Volume2, VolumeX, Loader2 } from "lucide-react";
+import { DownloadButton } from "@/components/DownloadButton";
 
 type Props = {
   src: string;
@@ -8,6 +9,8 @@ type Props = {
   onEnded?: () => void;
   title?: string;
   subtitle?: string;
+  downloadName?: string;
+  allowDownload?: boolean;
 };
 
 function fmt(t: number) {
@@ -17,7 +20,16 @@ function fmt(t: number) {
   return `${m}:${String(s).padStart(2, "0")}`;
 }
 
-export function AudioPlayer({ src, live = false, autoPlay = false, onEnded, title, subtitle }: Props) {
+export function AudioPlayer({
+  src,
+  live = false,
+  autoPlay = false,
+  onEnded,
+  title,
+  subtitle,
+  downloadName,
+  allowDownload = true,
+}: Props) {
   const ref = useRef<HTMLAudioElement | null>(null);
   const [playing, setPlaying] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -163,6 +175,16 @@ export function AudioPlayer({ src, live = false, autoPlay = false, onEnded, titl
           dir="ltr"
         />
       </div>
+
+      {allowDownload && !live && src && (
+        <div className="mt-4 flex justify-center">
+          <DownloadButton
+            url={src}
+            filename={`${(downloadName || title || "audio").replace(/[\\/:*?"<>|]/g, "")}.mp3`}
+            label="تحميل الملف الصوتي"
+          />
+        </div>
+      )}
     </div>
   );
 }

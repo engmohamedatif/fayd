@@ -134,7 +134,7 @@ function FaraidhPage() {
             </div>
           ))}
         </div>
-        <div className="text-xs text-muted-foreground pt-2">المصدر: كتب الفقه المعتمدة في المذاهب الأربعة (أحكام المواريث في الشريعة الإسلامية).</div>
+        <div className="text-xs text-muted-foreground pt-2">أحكام المواريث في الشريعة الإسلامية.</div>
       </section>
     </div>
   );

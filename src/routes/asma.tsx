@@ -28,7 +28,7 @@ function AsmaPage() {
     <div className="mx-auto max-w-6xl px-4 py-8 space-y-6">
       <header className="text-center space-y-2">
         <h1 className="text-3xl md:text-4xl font-extrabold">أسماء الله الحسنى</h1>
-        <p className="text-muted-foreground">التسعة والتسعون اسماً — المصدر: Aladhan API</p>
+        <p className="text-muted-foreground">التسعة والتسعون اسماً مع معانيها</p>
       </header>
       {err && <div className="text-center text-destructive">{err}</div>}
       {!names && !err && <div className="text-center text-muted-foreground">جاري التحميل...</div>}

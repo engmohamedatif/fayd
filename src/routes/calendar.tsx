@@ -98,7 +98,7 @@ function CalendarPage() {
           })}
         </div>
       )}
-      <div className="text-xs text-center text-muted-foreground">المصدر: Aladhan API</div>
+      <div className="text-xs text-center text-muted-foreground">التقويم الهجري والميلادي</div>
     </div>
   );
 }
