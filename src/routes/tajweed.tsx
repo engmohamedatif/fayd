@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { ExternalLink, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
+import { cleanText } from "@/lib/media";
 import { AudioPlayer } from "@/components/AudioPlayer";
 import { ArchiveBrowser } from "@/components/ArchiveBrowser";
 
@@ -74,15 +75,15 @@ function TajweedPage() {
     <div className="mx-auto max-w-5xl px-4 py-8 space-y-6">
       <header className="text-center space-y-2">
         <h1 className="text-3xl md:text-4xl font-extrabold">تعلّم التجويد</h1>
-        <p className="text-muted-foreground text-sm">أحكام التجويد بمراجع موثقة + تدريب صوتي عملي على كل حكم.</p>
+        <p className="text-muted-foreground text-sm">أحكام التجويد + تدريب صوتي عملي على كل حكم.</p>
       </header>
 
-      <div className="flex justify-center gap-2">
+      <div className="mx-auto flex w-fit overflow-hidden rounded-full border border-border bg-card">
         {(["rules", "lessons"] as const).map((t) => (
           <button
             key={t}
             onClick={() => setTab(t)}
-            className={`rounded-full px-5 py-2 text-sm font-bold border border-border transition ${
+            className={`px-6 py-2 text-sm font-bold transition-all duration-300 border-l border-border last:border-l-0 ${
               tab === t ? "bg-foreground text-background" : "md:hover:bg-muted"
             }`}
           >
@@ -101,12 +102,12 @@ function TajweedPage() {
         />
       ) : (
         <div className="grid md:grid-cols-[260px_1fr] gap-6">
-          <aside className="space-y-1 md:sticky md:top-20 md:self-start">
+          <aside className="overflow-hidden rounded-2xl border border-border bg-card divide-y divide-border md:sticky md:top-20 md:self-start">
             {RULES.map((r) => (
               <button
                 key={r.slug}
                 onClick={() => setRule(r)}
-                className={`w-full text-right px-3 py-2 rounded-lg text-sm transition ${
+                className={`w-full text-right px-4 py-2.5 text-sm transition-all duration-300 ${
                   rule.slug === r.slug ? "bg-foreground text-background" : "md:hover:bg-muted"
                 }`}
               >
@@ -122,16 +123,10 @@ function TajweedPage() {
                 <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
               </div>
             )}
-            {sum?.extract && <p className="leading-loose text-lg whitespace-pre-wrap">{sum.extract}</p>}
-            {sum?.content_urls && (
-              <a
-                href={sum.content_urls.desktop.page}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 text-sm rounded-full border border-border px-4 py-2 md:hover:bg-muted"
-              >
-                <ExternalLink className="h-4 w-4" /> المرجع الكامل
-              </a>
+            {sum?.extract && (
+              <p className="leading-loose text-lg whitespace-pre-wrap animate-in fade-in duration-300">
+                {cleanText(sum.extract)}
+              </p>
             )}
 
             <div className="pt-4 border-t border-border space-y-3">
@@ -142,13 +137,6 @@ function TajweedPage() {
                 title={rule.drill.label}
                 subtitle="بصوت الشيخ محمود خليل الحصري — مرتل مجوّد"
               />
-              <div className="text-xs text-muted-foreground">
-                مصدر الصوت: everyayah.com — مصدر نص الآية: alquran.cloud (مصحف عثماني).
-              </div>
-            </div>
-
-            <div className="text-xs text-muted-foreground pt-2 border-t border-border">
-              مصدر الشرح: موسوعة ويكيبيديا العربية — محتوى مُرخّص بموجب CC BY-SA.
             </div>
           </article>
         </div>

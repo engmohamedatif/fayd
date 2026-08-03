@@ -50,13 +50,14 @@ function Index() {
       <section>
         <h2 className="text-xl font-bold mb-4">الأقسام</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-          {features.map(({ to, title, desc, Icon }) => (
+          {features.map(({ to, title, desc, Icon }, i) => (
             <Link
               key={to}
               to={to}
-              className="group rounded-2xl border border-border bg-card p-5 md:hover:bg-foreground md:hover:text-background transition"
+              style={{ animationDelay: `${Math.min(i, 16) * 40}ms` }}
+              className="group animate-in fade-in slide-in-from-bottom-3 fill-mode-backwards duration-500 rounded-2xl border border-border bg-card p-5 transition-all md:hover:bg-foreground md:hover:text-background md:hover:-translate-y-1 md:hover:shadow-lg active:scale-[0.98]"
             >
-              <Icon className="h-7 w-7 mb-3" />
+              <Icon className="h-7 w-7 mb-3 transition-transform duration-300 md:group-hover:scale-110" />
               <div className="font-bold">{title}</div>
               <div className="text-xs mt-1 text-muted-foreground md:group-hover:text-background/80">{desc}</div>
             </Link>

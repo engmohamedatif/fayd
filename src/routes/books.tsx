@@ -5,9 +5,9 @@ export const Route = createFileRoute("/books")({
   head: () => ({
     meta: [
       { title: "مكتبة الكتب الإسلامية - فيض" },
-      { name: "description", content: "مكتبة كتب إسلامية في التفسير والحديث والفقه والعقيدة والسيرة بمصادر موثقة." },
+      { name: "description", content: "مكتبة كتب إسلامية في التفسير والحديث والفقه والعقيدة والسيرة، تُقرأ وتُحمَّل مباشرة." },
       { property: "og:title", content: "مكتبة الكتب الإسلامية - فيض" },
-      { property: "og:description", content: "تصفح وحمّل أمهات الكتب الإسلامية مع توثيق المرجع." },
+      { property: "og:description", content: "تصفح واقرأ وحمّل أمهات الكتب الإسلامية داخل التطبيق." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -34,7 +34,7 @@ function BooksPage() {
       <header className="text-center space-y-2">
         <h1 className="text-3xl md:text-4xl font-extrabold">مكتبة الكتب</h1>
         <p className="text-muted-foreground text-sm">
-          كتب إسلامية بصيغة PDF مصنّفة حسب الفن، مع رابط المرجع الأصلي لكل كتاب.
+          كتب إسلامية مصنّفة حسب الفن — اقرأها داخل التطبيق أو حمّلها بضغطة واحدة.
         </p>
       </header>
       <ArchiveBrowser topics={TOPICS} mediatype="texts" />

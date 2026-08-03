@@ -42,7 +42,7 @@ export function audioFiles(files: ArchiveFile[]) {
 }
 
 export function textFiles(files: ArchiveFile[]) {
-  return files.filter((f) => /\.(pdf|epub|txt)$/i.test(f.name));
+  return files.filter((f) => /\.(pdf|epub|txt|doc|docx)$/i.test(f.name));
 }
 
 export function fileUrl(identifier: string, name: string) {
