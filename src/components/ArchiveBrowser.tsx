@@ -272,8 +272,9 @@ function FileReader({
           ) : (
             <pre className="mx-auto max-w-3xl whitespace-pre-wrap p-6 text-base leading-loose font-sans">{text}</pre>
           ))}
-        {ext === "pdf" && <iframe title={name} className="h-full w-full" src={url} />}
-        {ext === "epub" && <iframe title={name} className="h-full w-full" src={archiveReader} allow="fullscreen" />}
+        {(ext === "pdf" || ext === "epub") && (
+          <iframe title={name} className="h-full w-full" src={archiveReader} allow="fullscreen" />
+        )}
       </div>
     </div>
   );
