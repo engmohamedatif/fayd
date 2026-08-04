@@ -5,6 +5,7 @@ import { DownloadButton } from "@/components/DownloadButton";
 type Props = {
   src: string;
   live?: boolean;
+  refreshOnPlay?: boolean;
   autoPlay?: boolean;
   onEnded?: () => void;
   title?: string;
@@ -23,6 +24,7 @@ function fmt(t: number) {
 export function AudioPlayer({
   src,
   live = false,
+  refreshOnPlay = false,
   autoPlay = false,
   onEnded,
   title,
@@ -37,6 +39,7 @@ export function AudioPlayer({
   const [dur, setDur] = useState(0);
   const [vol, setVol] = useState(0.9);
   const [muted, setMuted] = useState(false);
+  const hasPlayed = useRef(false);
 
   useEffect(() => {
     const a = ref.current;
@@ -57,7 +60,13 @@ export function AudioPlayer({
     } else {
       setLoading(true);
       try {
+        if (live && refreshOnPlay && hasPlayed.current) {
+          const separator = src.includes("?") ? "&" : "?";
+          a.src = `${src}${separator}live=${Date.now()}`;
+          a.load();
+        }
         await a.play();
+        hasPlayed.current = true;
       } catch {
         setPlaying(false);
         setLoading(false);

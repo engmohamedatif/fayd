@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ChevronLeft, FileText, Loader2, Search, Play, BookOpen } from "lucide-react";
 import { AudioPlayer } from "@/components/AudioPlayer";
 import { DownloadButton } from "@/components/DownloadButton";
-import { cleanText, prettyName, extOf, objectUrlOf } from "@/lib/media";
+import { cleanText, prettyName, extOf } from "@/lib/media";
 import {
   searchArchive,
   getArchiveFiles,
@@ -196,6 +196,7 @@ function ItemView({
 
       {openFile && (
         <FileReader
+          identifier={doc.identifier}
           url={fileUrl(doc.identifier, openFile.name)}
           name={openFile.name}
           onClose={() => setOpenFile(null)}
@@ -205,40 +206,42 @@ function ItemView({
   );
 }
 
-function FileReader({ url, name, onClose }: { url: string; name: string; onClose: () => void }) {
+function FileReader({
+  identifier,
+  url,
+  name,
+  onClose,
+}: {
+  identifier: string;
+  url: string;
+  name: string;
+  onClose: () => void;
+}) {
   const ext = extOf(name);
-  const [blobUrl, setBlobUrl] = useState<string | null>(null);
   const [text, setText] = useState<string | null>(null);
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     let alive = true;
-    let created: string | null = null;
-    setBlobUrl(null);
     setText(null);
     setFailed(false);
 
     if (ext === "txt") {
       fetch(url)
-        .then((r) => r.text())
-        .then((t) => alive && setText(cleanText(t)))
-        .catch(() => alive && setFailed(true));
-    } else if (ext === "pdf" || ext === "epub") {
-      objectUrlOf(url)
-        .then((u) => {
-          created = u;
-          if (alive) setBlobUrl(u);
-          else URL.revokeObjectURL(u);
+        .then((r) => {
+          if (!r.ok) throw new Error("failed");
+          return r.text();
         })
+        .then((t) => alive && setText(cleanText(t)))
         .catch(() => alive && setFailed(true));
     }
     return () => {
       alive = false;
-      if (created) URL.revokeObjectURL(created);
     };
   }, [url, ext]);
 
   const office = ["doc", "docx", "ppt", "pptx", "xls", "xlsx"].includes(ext);
+  const archiveReader = `https://archive.org/embed/${encodeURIComponent(identifier)}?view=theater`;
 
   return (
     <div className="fixed inset-0 z-50 bg-background/95 backdrop-blur-sm animate-in fade-in duration-200 flex flex-col">
@@ -269,12 +272,8 @@ function FileReader({ url, name, onClose }: { url: string; name: string; onClose
           ) : (
             <pre className="mx-auto max-w-3xl whitespace-pre-wrap p-6 text-base leading-loose font-sans">{text}</pre>
           ))}
-        {(ext === "pdf" || ext === "epub") &&
-          (blobUrl ? (
-            <iframe title={name} className="h-full w-full" src={blobUrl} />
-          ) : (
-            !failed && <Spinner />
-          ))}
+        {ext === "pdf" && <iframe title={name} className="h-full w-full" src={url} />}
+        {ext === "epub" && <iframe title={name} className="h-full w-full" src={archiveReader} allow="fullscreen" />}
       </div>
     </div>
   );
