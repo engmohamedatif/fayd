@@ -3,6 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { ChevronLeft, Play, Pause, SkipBack, SkipForward, Loader2 } from "lucide-react";
 import { MP3_RECITERS, VERSE_RECITERS, surahAudioUrl } from "@/lib/quran-reciters";
 import { z } from "zod";
+import { DownloadButton } from "@/components/DownloadButton";
 
 const searchSchema = z.object({ mode: z.enum(["verse", "full"]).default("full") });
 
@@ -97,6 +98,8 @@ function PlayerView({ reciter, mode, surahs, surahNumber, onBack, reciterName }:
 
   const currentAyah = mode === "verse" ? audioAyahs?.[current] : undefined;
   const currentText = ayahs?.[current];
+  const fullServer = MP3_RECITERS.find((r) => r.id === reciter)?.server;
+  const currentAudioUrl = mode === "verse" ? currentAyah?.audio : fullServer ? surahAudioUrl(fullServer, surahNumber) : undefined;
 
   useEffect(() => {
     const a = audioRef.current;
@@ -218,6 +221,16 @@ function PlayerView({ reciter, mode, surahs, surahNumber, onBack, reciterName }:
         {loading && (
           <div className="flex justify-center mt-2 text-muted-foreground">
             <Loader2 className="h-4 w-4 animate-spin" />
+          </div>
+        )}
+        {currentAudioUrl && (
+          <div className="mt-5 flex justify-center">
+            <DownloadButton
+              url={currentAudioUrl}
+              filename={`${reciterName}-${surahMeta?.name ?? surahNumber}${mode === "verse" ? `-آية-${current + 1}` : ""}.mp3`}
+              label={mode === "verse" ? "تحميل الآية" : "تحميل السورة"}
+              variant="solid"
+            />
           </div>
         )}
       </div>

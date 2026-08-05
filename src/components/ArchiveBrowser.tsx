@@ -3,6 +3,7 @@ import { ChevronLeft, FileText, Loader2, Search, Play, BookOpen } from "lucide-r
 import { AudioPlayer } from "@/components/AudioPlayer";
 import { DownloadButton } from "@/components/DownloadButton";
 import { cleanText, prettyName, extOf } from "@/lib/media";
+import { DocumentViewer } from "@/components/DocumentViewer";
 import {
   searchArchive,
   getArchiveFiles,
@@ -217,32 +218,6 @@ function FileReader({
   name: string;
   onClose: () => void;
 }) {
-  const ext = extOf(name);
-  const [text, setText] = useState<string | null>(null);
-  const [failed, setFailed] = useState(false);
-
-  useEffect(() => {
-    let alive = true;
-    setText(null);
-    setFailed(false);
-
-    if (ext === "txt") {
-      fetch(url)
-        .then((r) => {
-          if (!r.ok) throw new Error("failed");
-          return r.text();
-        })
-        .then((t) => alive && setText(cleanText(t)))
-        .catch(() => alive && setFailed(true));
-    }
-    return () => {
-      alive = false;
-    };
-  }, [url, ext]);
-
-  const office = ["doc", "docx", "ppt", "pptx", "xls", "xlsx"].includes(ext);
-  const archiveReader = `https://archive.org/embed/${encodeURIComponent(identifier)}?view=theater`;
-
   return (
     <div className="fixed inset-0 z-50 bg-background/95 backdrop-blur-sm animate-in fade-in duration-200 flex flex-col">
       <div className="flex items-center gap-3 border-b border-border px-4 py-3">
@@ -253,29 +228,7 @@ function FileReader({
         <DownloadButton url={url} filename={name} variant="solid" label="تحميل" />
       </div>
 
-      <div className="flex-1 overflow-auto">
-        {failed && (
-          <div className="p-8 text-center text-sm text-muted-foreground">
-            تعذّر العرض داخل الموقع لهذا الملف — يمكنك تحميله من الزر بالأعلى.
-          </div>
-        )}
-        {office && (
-          <iframe
-            title={name}
-            className="h-full w-full"
-            src={`https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(url)}`}
-          />
-        )}
-        {ext === "txt" &&
-          (text === null && !failed ? (
-            <Spinner />
-          ) : (
-            <pre className="mx-auto max-w-3xl whitespace-pre-wrap p-6 text-base leading-loose font-sans">{text}</pre>
-          ))}
-        {(ext === "pdf" || ext === "epub") && (
-          <iframe title={name} className="h-full w-full" src={archiveReader} allow="fullscreen" />
-        )}
-      </div>
+      <div className="flex-1 overflow-auto"><DocumentViewer url={url} name={name} /></div>
     </div>
   );
 }

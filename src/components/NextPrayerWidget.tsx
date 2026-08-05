@@ -124,9 +124,9 @@ export function NextPrayerWidget() {
   const ss = Math.max(0, Math.floor((diff % 60_000) / 1000));
 
   return (
-    <div className="rounded-2xl border border-border bg-foreground text-background p-6 md:p-8">
+    <div className="flex h-full min-h-[300px] items-center border border-border bg-muted p-6 text-foreground md:min-h-[390px] md:p-8">
       {status === "ready" && timings && next ? (
-        <div className="grid md:grid-cols-2 gap-6 items-center">
+        <div className="grid w-full gap-6 md:grid-cols-2 md:items-center">
           <div>
             <div className="flex items-center gap-2 text-sm opacity-70">
               <Clock className="h-4 w-4" />
@@ -150,7 +150,7 @@ export function NextPrayerWidget() {
             </div>
             <div className="mt-4 grid grid-cols-5 gap-2 text-xs">
               {PRAYERS.map((p) => (
-                <div key={p} className="rounded-md bg-background/10 px-1 py-2">
+                <div key={p} className="border border-border bg-background px-1 py-2">
                   <div className="opacity-70">{NAMES[p]}</div>
                   <div className="font-semibold mt-1" dir="ltr">{timings[p]?.slice(0, 5)}</div>
                 </div>

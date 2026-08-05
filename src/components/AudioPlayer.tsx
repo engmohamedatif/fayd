@@ -84,7 +84,7 @@ export function AudioPlayer({
   const pct = dur > 0 ? (cur / dur) * 100 : 0;
 
   return (
-    <div className="rounded-3xl border border-border bg-card p-5 md:p-6 shadow-sm">
+    <div className="overflow-hidden rounded-lg border border-border bg-card shadow-sm">
       <audio
         ref={ref}
         src={src}
@@ -100,17 +100,17 @@ export function AudioPlayer({
       />
 
       {(title || subtitle) && (
-        <div className="text-center mb-4">
+        <div className="border-b border-border bg-muted px-5 py-4 text-center">
           {title && <div className="font-bold text-base md:text-lg truncate">{title}</div>}
           {subtitle && <div className="text-xs text-muted-foreground mt-1">{subtitle}</div>}
         </div>
       )}
 
-      <div className="flex items-center justify-center gap-4 mb-4">
+      <div className="flex items-center justify-center gap-4 px-5 pb-4 pt-6">
         <button
           onClick={toggle}
           disabled={!src}
-          className="relative h-16 w-16 md:h-20 md:w-20 rounded-full bg-foreground text-background flex items-center justify-center md:hover:scale-105 active:scale-95 transition disabled:opacity-40 shadow-lg"
+           className="relative flex h-16 w-16 items-center justify-center rounded-full bg-foreground text-background shadow-lg transition active:scale-95 disabled:opacity-40 md:h-20 md:w-20 md:hover:scale-105"
           aria-label={playing ? "إيقاف" : "تشغيل"}
         >
           {loading && !playing ? (
@@ -124,7 +124,7 @@ export function AudioPlayer({
       </div>
 
       {live ? (
-        <div className="flex items-center justify-center gap-2 mb-3">
+        <div className="mb-3 flex items-center justify-center gap-2 px-5">
           <span className="relative flex h-2.5 w-2.5">
             <span className={`absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75 ${playing ? "animate-ping" : ""}`}></span>
             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500"></span>
@@ -132,7 +132,7 @@ export function AudioPlayer({
           <span className="text-xs font-bold tracking-wide">مباشر</span>
         </div>
       ) : (
-        <div className="space-y-1.5 mb-3">
+        <div className="mb-3 space-y-1.5 px-5">
           <input
             type="range"
             min={0}
@@ -151,7 +151,7 @@ export function AudioPlayer({
         </div>
       )}
 
-      <div className="flex items-center gap-2 max-w-[220px] mx-auto">
+      <div className="mx-auto flex max-w-[260px] items-center gap-2 px-5">
         <button
           onClick={() => {
             const a = ref.current;
@@ -186,7 +186,7 @@ export function AudioPlayer({
       </div>
 
       {allowDownload && !live && src && (
-        <div className="mt-4 flex justify-center">
+        <div className="mt-5 flex justify-center border-t border-border bg-muted px-5 py-4">
           <DownloadButton
             url={src}
             filename={`${(downloadName || title || "audio").replace(/[\\/:*?"<>|]/g, "")}.mp3`}
