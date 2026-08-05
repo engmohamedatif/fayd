@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { ChevronLeft, FileText, Loader2, Search, Play, BookOpen } from "lucide-react";
 import { AudioPlayer } from "@/components/AudioPlayer";
 import { DownloadButton } from "@/components/DownloadButton";
-import { cleanText, prettyName, extOf, objectUrlOf } from "@/lib/media";
+import { cleanText, prettyName, extOf } from "@/lib/media";
+import { DocumentViewer } from "@/components/DocumentViewer";
 import {
   searchArchive,
   getArchiveFiles,
@@ -217,39 +218,6 @@ function FileReader({
   name: string;
   onClose: () => void;
 }) {
-  const ext = extOf(name);
-  const [text, setText] = useState<string | null>(null);
-  const [objectUrl, setObjectUrl] = useState<string | null>(null);
-  const [failed, setFailed] = useState(false);
-
-  useEffect(() => {
-    let alive = true;
-    setText(null);
-    setObjectUrl(null);
-    setFailed(false);
-
-    if (ext === "txt") {
-      fetch(url)
-        .then((r) => {
-          if (!r.ok) throw new Error("failed");
-          return r.text();
-        })
-        .then((t) => alive && setText(cleanText(t)))
-        .catch(() => alive && setFailed(true));
-    } else if (ext === "pdf") {
-      objectUrlOf(url)
-        .then((value) => alive && setObjectUrl(value))
-        .catch(() => alive && setFailed(true));
-    }
-    return () => {
-      alive = false;
-      if (objectUrl) URL.revokeObjectURL(objectUrl);
-    };
-  }, [url, ext]);
-
-  const office = ["doc", "docx", "ppt", "pptx", "xls", "xlsx"].includes(ext);
-  const archiveReader = `https://archive.org/embed/${encodeURIComponent(identifier)}?view=theater`;
-
   return (
     <div className="fixed inset-0 z-50 bg-background/95 backdrop-blur-sm animate-in fade-in duration-200 flex flex-col">
       <div className="flex items-center gap-3 border-b border-border px-4 py-3">
@@ -260,24 +228,7 @@ function FileReader({
         <DownloadButton url={url} filename={name} variant="solid" label="تحميل" />
       </div>
 
-      <div className="flex-1 overflow-auto">
-        {failed && <div className="flex min-h-full flex-col items-center justify-center gap-4 p-8 text-center text-sm text-muted-foreground"><FileText className="h-10 w-10" /><p>تعذّر تجهيز المعاينة، ويمكنك فتح الملف مباشرة أو تحميله.</p><a href={url} target="_blank" rel="noreferrer" className="rounded-md bg-foreground px-5 py-2.5 font-bold text-background">فتح الملف</a></div>}
-        {office && (
-          <iframe
-            title={name}
-            className="h-full w-full"
-            src={`https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(url)}`}
-          />
-        )}
-        {ext === "txt" &&
-          (text === null && !failed ? (
-            <Spinner />
-          ) : (
-            <pre className="mx-auto max-w-3xl whitespace-pre-wrap p-6 text-base leading-loose font-sans">{text}</pre>
-          ))}
-        {ext === "pdf" && !failed && (objectUrl ? <object data={objectUrl} type="application/pdf" className="h-full min-h-[75dvh] w-full"><a href={url} target="_blank" rel="noreferrer">فتح الملف</a></object> : <Spinner />)}
-        {ext === "epub" && !failed && <iframe title={name} className="h-full min-h-[75dvh] w-full bg-background" src={archiveReader} allow="fullscreen" onError={() => setFailed(true)} />}
-      </div>
+      <div className="flex-1 overflow-auto"><DocumentViewer url={url} name={name} /></div>
     </div>
   );
 }
