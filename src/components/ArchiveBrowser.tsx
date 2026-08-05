@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ChevronLeft, FileText, Loader2, Search, Play, BookOpen } from "lucide-react";
 import { AudioPlayer } from "@/components/AudioPlayer";
 import { DownloadButton } from "@/components/DownloadButton";
-import { cleanText, prettyName, extOf } from "@/lib/media";
+import { cleanText, prettyName, extOf, objectUrlOf } from "@/lib/media";
 import {
   searchArchive,
   getArchiveFiles,
@@ -219,11 +219,13 @@ function FileReader({
 }) {
   const ext = extOf(name);
   const [text, setText] = useState<string | null>(null);
+  const [objectUrl, setObjectUrl] = useState<string | null>(null);
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     let alive = true;
     setText(null);
+    setObjectUrl(null);
     setFailed(false);
 
     if (ext === "txt") {
@@ -234,9 +236,14 @@ function FileReader({
         })
         .then((t) => alive && setText(cleanText(t)))
         .catch(() => alive && setFailed(true));
+    } else if (ext === "pdf") {
+      objectUrlOf(url)
+        .then((value) => alive && setObjectUrl(value))
+        .catch(() => alive && setFailed(true));
     }
     return () => {
       alive = false;
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
     };
   }, [url, ext]);
 
@@ -254,11 +261,7 @@ function FileReader({
       </div>
 
       <div className="flex-1 overflow-auto">
-        {failed && (
-          <div className="p-8 text-center text-sm text-muted-foreground">
-            تعذّر العرض داخل الموقع لهذا الملف — يمكنك تحميله من الزر بالأعلى.
-          </div>
-        )}
+        {failed && <div className="flex min-h-full flex-col items-center justify-center gap-4 p-8 text-center text-sm text-muted-foreground"><FileText className="h-10 w-10" /><p>تعذّر تجهيز المعاينة، ويمكنك فتح الملف مباشرة أو تحميله.</p><a href={url} target="_blank" rel="noreferrer" className="rounded-md bg-foreground px-5 py-2.5 font-bold text-background">فتح الملف</a></div>}
         {office && (
           <iframe
             title={name}
@@ -272,9 +275,8 @@ function FileReader({
           ) : (
             <pre className="mx-auto max-w-3xl whitespace-pre-wrap p-6 text-base leading-loose font-sans">{text}</pre>
           ))}
-        {(ext === "pdf" || ext === "epub") && (
-          <iframe title={name} className="h-full w-full" src={archiveReader} allow="fullscreen" />
-        )}
+        {ext === "pdf" && !failed && (objectUrl ? <object data={objectUrl} type="application/pdf" className="h-full min-h-[75dvh] w-full"><a href={url} target="_blank" rel="noreferrer">فتح الملف</a></object> : <Spinner />)}
+        {ext === "epub" && !failed && <iframe title={name} className="h-full min-h-[75dvh] w-full bg-background" src={archiveReader} allow="fullscreen" onError={() => setFailed(true)} />}
       </div>
     </div>
   );
