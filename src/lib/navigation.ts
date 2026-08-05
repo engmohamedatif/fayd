@@ -59,4 +59,9 @@ export const navigationGroups = [
   },
 ] as const;
 
-export const navigationItems = navigationGroups.flatMap((group) => group.items);
+export const navigationItems = navigationGroups.reduce<
+  Array<(typeof navigationGroups)[number]["items"][number]>
+>((items, group) => {
+  items.push(...group.items);
+  return items;
+}, []);
