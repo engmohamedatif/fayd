@@ -28,7 +28,7 @@ export function DocumentViewer({ url, name }: Props) {
           if (!response.ok) throw new Error("fetch failed");
           if (alive) setContent(cleanText(await response.text()));
         } else if (ext === "pdf") {
-          const pdfjs = await import("pdfjs-dist/build/pdf.min.mjs");
+          const pdfjs: any = await import(/* @vite-ignore */ "/pdf.min.mjs");
           pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
           const response = await fetch(url);
           if (!response.ok) throw new Error("fetch failed");
