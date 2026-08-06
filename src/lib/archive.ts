@@ -14,8 +14,9 @@ export async function searchArchive(opts: {
   rows?: number;
   page?: number;
 }): Promise<{ docs: ArchiveDoc[]; total: number }> {
+  const formatFilter = opts.mediatype === "audio" ? "format:(MP3)" : "format:(PDF OR EPUB OR Text)";
   const params = new URLSearchParams({
-    q: `title:(${opts.query}) AND mediatype:${opts.mediatype} AND language:(Arabic OR ara OR العربية OR *)`,
+    q: `title:(${opts.query}) AND mediatype:${opts.mediatype} AND ${formatFilter}`,
     rows: String(opts.rows ?? 20),
     page: String(opts.page ?? 1),
     output: "json",
@@ -46,7 +47,8 @@ export function textFiles(files: ArchiveFile[]) {
 }
 
 export function fileUrl(identifier: string, name: string) {
-  return `https://archive.org/download/${encodeURIComponent(identifier)}/${encodeURIComponent(name)}`;
+  const direct = `https://archive.org/download/${encodeURIComponent(identifier)}/${encodeURIComponent(name)}`;
+  return `/api/public/ia?u=${encodeURIComponent(direct)}`;
 }
 
 export function itemUrl(identifier: string) {
