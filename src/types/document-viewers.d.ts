@@ -15,3 +15,6 @@ declare module "epubjs" {
 
   export default function ePub(input: ArrayBuffer): Book;
 }
+declare module "pdfjs-dist/build/pdf.min.mjs" {
+  export * from "pdfjs-dist";
+}

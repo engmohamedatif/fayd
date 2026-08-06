@@ -34,6 +34,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as TafsirSurahRouteImport } from './routes/tafsir.$surah'
 import { Route as QuranReadSurahRouteImport } from './routes/quran-read.$surah'
 import { Route as QuranListenReciterRouteImport } from './routes/quran-listen.$reciter'
+import { Route as ApiPublicIaRouteImport } from './routes/api/public/ia'
 
 const ZakatRoute = ZakatRouteImport.update({
   id: '/zakat',
@@ -160,6 +161,11 @@ const QuranListenReciterRoute = QuranListenReciterRouteImport.update({
   path: '/$reciter',
   getParentRoute: () => QuranListenRoute,
 } as any)
+const ApiPublicIaRoute = ApiPublicIaRouteImport.update({
+  id: '/api/public/ia',
+  path: '/api/public/ia',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -187,6 +193,7 @@ export interface FileRoutesByFullPath {
   '/quran-listen/$reciter': typeof QuranListenReciterRoute
   '/quran-read/$surah': typeof QuranReadSurahRoute
   '/tafsir/$surah': typeof TafsirSurahRoute
+  '/api/public/ia': typeof ApiPublicIaRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -214,6 +221,7 @@ export interface FileRoutesByTo {
   '/quran-listen/$reciter': typeof QuranListenReciterRoute
   '/quran-read/$surah': typeof QuranReadSurahRoute
   '/tafsir/$surah': typeof TafsirSurahRoute
+  '/api/public/ia': typeof ApiPublicIaRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -242,6 +250,7 @@ export interface FileRoutesById {
   '/quran-listen/$reciter': typeof QuranListenReciterRoute
   '/quran-read/$surah': typeof QuranReadSurahRoute
   '/tafsir/$surah': typeof TafsirSurahRoute
+  '/api/public/ia': typeof ApiPublicIaRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -271,6 +280,7 @@ export interface FileRouteTypes {
     | '/quran-listen/$reciter'
     | '/quran-read/$surah'
     | '/tafsir/$surah'
+    | '/api/public/ia'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -298,6 +308,7 @@ export interface FileRouteTypes {
     | '/quran-listen/$reciter'
     | '/quran-read/$surah'
     | '/tafsir/$surah'
+    | '/api/public/ia'
   id:
     | '__root__'
     | '/'
@@ -325,6 +336,7 @@ export interface FileRouteTypes {
     | '/quran-listen/$reciter'
     | '/quran-read/$surah'
     | '/tafsir/$surah'
+    | '/api/public/ia'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -350,6 +362,7 @@ export interface RootRouteChildren {
   TajweedRoute: typeof TajweedRoute
   TasbihRoute: typeof TasbihRoute
   ZakatRoute: typeof ZakatRoute
+  ApiPublicIaRoute: typeof ApiPublicIaRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -529,6 +542,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof QuranListenReciterRouteImport
       parentRoute: typeof QuranListenRoute
     }
+    '/api/public/ia': {
+      id: '/api/public/ia'
+      path: '/api/public/ia'
+      fullPath: '/api/public/ia'
+      preLoaderRoute: typeof ApiPublicIaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -590,7 +610,18 @@ const rootRouteChildren: RootRouteChildren = {
   TajweedRoute: TajweedRoute,
   TasbihRoute: TasbihRoute,
   ZakatRoute: ZakatRoute,
+  ApiPublicIaRoute: ApiPublicIaRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
