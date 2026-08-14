@@ -28,8 +28,11 @@ export function DocumentViewer({ url, name }: Props) {
           if (!response.ok) throw new Error("fetch failed");
           if (alive) setContent(cleanText(await response.text()));
         } else if (ext === "pdf") {
-          const pdfjs: any = await import(/* @vite-ignore */ "/pdf.min.mjs");
-          pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
+          const [pdfjs, workerModule] = await Promise.all([
+            import("pdfjs-dist"),
+            import("pdfjs-dist/build/pdf.worker.min.mjs?url"),
+          ]);
+          pdfjs.GlobalWorkerOptions.workerSrc = workerModule.default;
           const response = await fetch(url);
           if (!response.ok) throw new Error("fetch failed");
           const data = await response.arrayBuffer();
@@ -48,10 +51,10 @@ export function DocumentViewer({ url, name }: Props) {
             const canvas = document.createElement("canvas");
             canvas.width = Math.floor(viewport.width);
             canvas.height = Math.floor(viewport.height);
-            canvas.className = "mx-auto mb-4 w-full max-w-4xl rounded-lg border border-border bg-white";
+            canvas.className = "mx-auto mb-4 w-full max-w-4xl rounded-lg border border-border bg-document";
             host.appendChild(canvas);
             const ctx = canvas.getContext("2d");
-            if (ctx) await page.render({ canvas, canvasContext: ctx, viewport }).promise;
+            if (ctx) await page.render({ canvasContext: ctx, viewport }).promise;
             if (i === 1 && alive) setLoading(false);
           }
           cleanup = () => { host.innerHTML = ""; void doc.cleanup(); };
