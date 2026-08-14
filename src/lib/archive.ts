@@ -29,7 +29,7 @@ export async function searchArchive(opts: {
   return { docs: json?.response?.docs ?? [], total: json?.response?.numFound ?? 0 };
 }
 
-export type ArchiveFile = { name: string; format?: string; length?: string; title?: string };
+export type ArchiveFile = { name: string; format?: string; length?: string; title?: string; source?: string };
 
 export async function getArchiveFiles(identifier: string): Promise<ArchiveFile[]> {
   const res = await fetch(`https://archive.org/metadata/${encodeURIComponent(identifier)}`);
@@ -43,7 +43,22 @@ export function audioFiles(files: ArchiveFile[]) {
 }
 
 export function textFiles(files: ArchiveFile[]) {
-  return files.filter((f) => /\.(pdf|epub|txt|doc|docx)$/i.test(f.name));
+  const readable = files.filter((f) => {
+    if (!/\.(pdf|epub|txt|doc|docx)$/i.test(f.name)) return false;
+    if (/(_text|_bw|_searchable|_chocr|_djvu)\.pdf$/i.test(f.name)) return false;
+    if (/(_djvu|_searchtext|_hocr|_chocr)\.txt$/i.test(f.name)) return false;
+    return true;
+  });
+
+  return readable.sort((a, b) => {
+    const rank = (file: ArchiveFile) => {
+      const ext = file.name.split(".").pop()?.toLowerCase();
+      const original = file.source === "original" ? 0 : 10;
+      const type = ext === "pdf" ? 0 : ext === "epub" ? 2 : ext === "docx" ? 4 : ext === "doc" ? 5 : 6;
+      return original + type;
+    };
+    return rank(a) - rank(b) || a.name.localeCompare(b.name, "ar", { numeric: true });
+  });
 }
 
 export function fileUrl(identifier: string, name: string) {

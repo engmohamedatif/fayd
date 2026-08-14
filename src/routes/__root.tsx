@@ -83,7 +83,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "فيض - رفقيك للجنة" },
       { name: "description", content: "فيض تطبيق إسلامي شامل: إذاعة القرآن الكريم مباشر، سبحة إلكترونية، أذكار، أدعية، أحاديث، قصص الأنبياء ومواقيت الصلاة." },
       { name: "author", content: "محمد عاطف" },
-      { name: "theme-color", content: "#000000" },
+      { name: "theme-color", content: "#176b3a" },
       { property: "og:title", content: "فيض - رفقيك للجنة" },
       { property: "og:description", content: "فيض تطبيق إسلامي شامل: إذاعة القرآن الكريم مباشر، سبحة إلكترونية، أذكار، أدعية، أحاديث، قصص الأنبياء ومواقيت الصلاة." },
       { property: "og:type", content: "website" },
