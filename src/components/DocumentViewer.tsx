@@ -54,7 +54,7 @@ export function DocumentViewer({ url, name }: Props) {
             canvas.className = "mx-auto mb-4 w-full max-w-4xl rounded-lg border border-border bg-document";
             host.appendChild(canvas);
             const ctx = canvas.getContext("2d");
-            if (ctx) await page.render({ canvas, canvasContext: ctx, viewport }).promise;
+            if (ctx) await page.render({ canvasContext: ctx, viewport }).promise;
             if (i === 1 && alive) setLoading(false);
           }
           cleanup = () => { host.innerHTML = ""; void doc.cleanup(); };
