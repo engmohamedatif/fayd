@@ -141,6 +141,17 @@ function ItemView({
   const list = files ? (mediatype === "audio" ? audioFiles(files) : textFiles(files)) : null;
   const title = cleanText(doc.title) || doc.identifier;
 
+  const readableFileName = (file: ArchiveFile, index: number) => {
+    const supplied = cleanText(file.title);
+    if (supplied && supplied.toLowerCase() !== prettyName(file.name).toLowerCase()) return supplied;
+    const base = prettyName(file.name);
+    const number = base.match(/(?:^|\s|0)(\d{1,3})(?:\s|$|p)/i)?.[1];
+    const part = number ? Number(number) : null;
+    if (part !== null && Number.isFinite(part)) return `الجزء ${part + 1}`;
+    if (list && list.length === 1) return title;
+    return mediatype === "texts" ? `نسخة القراءة ${index + 1}` : base;
+  };
+
   return (
     <div className="space-y-5 animate-in fade-in slide-in-from-bottom-2 duration-300">
       <button onClick={onBack} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors">
@@ -168,9 +179,9 @@ function ItemView({
       )}
 
       <div className="overflow-hidden rounded-2xl border border-border bg-card divide-y divide-border">
-        {list?.map((f) => {
+        {list?.map((f, index) => {
           const url = fileUrl(doc.identifier, f.name);
-          const name = cleanText(f.title) || prettyName(f.name);
+          const name = readableFileName(f, index);
           const active = mediatype === "audio" ? track?.name === f.name : openFile?.name === f.name;
           return (
             <div
@@ -200,6 +211,7 @@ function ItemView({
           identifier={doc.identifier}
           url={fileUrl(doc.identifier, openFile.name)}
           name={openFile.name}
+          displayName={readableFileName(openFile, list?.findIndex((file) => file.name === openFile.name) ?? 0)}
           onClose={() => setOpenFile(null)}
         />
       )}
@@ -211,11 +223,13 @@ function FileReader({
   identifier,
   url,
   name,
+  displayName,
   onClose,
 }: {
   identifier: string;
   url: string;
   name: string;
+  displayName: string;
   onClose: () => void;
 }) {
   return (
@@ -224,7 +238,7 @@ function FileReader({
         <button onClick={onClose} className="rounded-full border border-border px-4 py-1.5 text-sm md:hover:bg-muted transition">
           إغلاق
         </button>
-        <div className="flex-1 truncate text-sm font-bold">{prettyName(name)}</div>
+        <div className="flex-1 truncate text-sm font-bold">{displayName}</div>
         <DownloadButton url={url} filename={name} variant="solid" label="تحميل" />
       </div>
 

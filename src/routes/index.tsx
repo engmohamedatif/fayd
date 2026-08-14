@@ -21,9 +21,9 @@ function Index() {
   return (
     <div className="mx-auto max-w-7xl px-4 pb-10 pt-6 md:px-6 md:pt-10">
       <section className="grid gap-6 border-b border-border pb-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(340px,.8fr)] lg:items-stretch">
-        <div className="flex min-h-[300px] flex-col justify-between bg-foreground p-6 text-background md:min-h-[390px] md:p-10">
-          <div className="flex items-center justify-between"><span className="text-xs font-bold">رفيقك اليومي</span><img src="/icons/icon-192.png" alt="فيض" className="h-12 w-12 rounded-lg border border-background/20" /></div>
-          <div className="max-w-2xl"><h1 className="font-display text-5xl font-bold md:text-7xl">فيض</h1><p className="mt-4 max-w-xl text-base leading-8 text-background/70 md:text-lg">القرآن والذكر والعلم والصوتيات، في مكان واحد واضح وهادئ.</p><div className="mt-7 flex flex-wrap gap-3"><Link to="/quran-read" className="inline-flex h-11 items-center gap-2 bg-background px-5 text-sm font-bold text-foreground"><BookOpen className="h-4 w-4" />ابدأ القراءة</Link><Link to="/quran-listen" className="inline-flex h-11 items-center gap-2 border border-background/30 px-5 text-sm font-bold"><Headphones className="h-4 w-4" />استمع الآن</Link></div></div>
+        <div className="flex min-h-[300px] flex-col justify-between bg-primary p-6 text-primary-foreground md:min-h-[390px] md:p-10">
+          <div className="flex items-center justify-between"><span className="text-xs font-bold">رفيقك اليومي</span><img src="/icons/icon-192.png" alt="فيض" className="h-12 w-12 rounded-lg border border-primary-foreground/25 bg-background" /></div>
+          <div className="max-w-2xl"><h1 className="font-display text-5xl font-bold md:text-7xl">فيض</h1><p className="mt-4 max-w-xl text-base leading-8 text-primary-foreground/80 md:text-lg">القرآن والذكر والعلم والصوتيات، في مكان واحد واضح وهادئ.</p><div className="mt-7 flex flex-wrap gap-3"><Link to="/quran-read" className="inline-flex h-11 items-center gap-2 bg-background px-5 text-sm font-bold text-primary"><BookOpen className="h-4 w-4" />ابدأ القراءة</Link><Link to="/quran-listen" className="inline-flex h-11 items-center gap-2 border border-primary-foreground/40 px-5 text-sm font-bold"><Headphones className="h-4 w-4" />استمع الآن</Link></div></div>
         </div>
         <NextPrayerWidget />
       </section>
@@ -38,5 +38,5 @@ function Index() {
 }
 
 function FeatureLink({ to, title, subtitle, icon: Icon }: { to: "/radio" | "/adhkar" | "/lectures"; title: string; subtitle: string; icon: typeof Radio }) {
-  return <Link to={to} className="group grid min-h-28 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-4 bg-background p-5 hover:bg-muted"><span className="grid h-11 w-11 place-items-center border border-border"><Icon className="h-5 w-5" /></span><span className="min-w-0"><b className="block">{title}</b><small className="text-muted-foreground">{subtitle}</small></span><ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" /></Link>;
+  return <Link to={to} className="group grid min-h-28 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-4 bg-card p-5 hover:bg-secondary"><span className="grid h-11 w-11 place-items-center border border-primary/30 bg-accent text-primary"><Icon className="h-5 w-5" /></span><span className="min-w-0"><b className="block">{title}</b><small className="text-muted-foreground">{subtitle}</small></span><ArrowLeft className="h-4 w-4 text-primary transition-transform group-hover:-translate-x-1" /></Link>;
 }

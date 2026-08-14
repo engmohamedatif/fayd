@@ -33,10 +33,12 @@ export function DocumentViewer({ url, name }: Props) {
             import("pdfjs-dist/build/pdf.worker.min.mjs?url"),
           ]);
           pdfjs.GlobalWorkerOptions.workerSrc = workerModule.default;
-          const response = await fetch(url);
-          if (!response.ok) throw new Error("fetch failed");
-          const data = await response.arrayBuffer();
-          const doc = await pdfjs.getDocument({ data }).promise;
+          const doc = await pdfjs.getDocument({
+            url,
+            rangeChunkSize: 262144,
+            disableAutoFetch: false,
+            disableStream: false,
+          }).promise;
           if (!alive || !pdfRoot.current) return void doc.cleanup();
           const host = pdfRoot.current;
           host.innerHTML = "";

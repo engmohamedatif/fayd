@@ -14,12 +14,12 @@ export function SiteHeader() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur-xl">
+      <header className="sticky top-0 z-40 border-b border-primary/20 bg-background/95 shadow-sm backdrop-blur-xl">
         <div className="mx-auto grid h-16 max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-4 md:h-20 md:px-6">
           <div className="flex min-w-0 items-center gap-3">
             <Link to="/" className="flex shrink-0 items-center gap-3" aria-label="فيض — الرئيسية">
-              <img src="/icons/icon-192.png" alt="" className="h-10 w-10 rounded-lg border border-border md:h-11 md:w-11" />
-              <div className="hidden sm:block"><div className="font-display text-xl font-bold leading-none">فيض</div><div className="mt-1 text-[10px] text-muted-foreground">رفيقك إلى الخير</div></div>
+              <img src="/icons/icon-192.png" alt="" className="h-10 w-10 rounded-lg border border-primary/30 bg-secondary md:h-11 md:w-11" />
+              <div className="hidden sm:block"><div className="font-display text-xl font-bold leading-none text-primary">فيض</div><div className="mt-1 text-[10px] text-muted-foreground">رفيقك إلى الخير</div></div>
             </Link>
             <div className="mr-3 hidden h-8 w-px bg-border lg:block" />
             <nav className="hidden min-w-0 items-center gap-1 lg:flex">
@@ -46,11 +46,11 @@ export function SiteHeader() {
         </div>
       )}
       {searchOpen && <div className="fixed inset-0 z-50 flex items-start justify-center bg-foreground/35 px-4 pt-[10dvh] backdrop-blur-sm" onClick={() => setSearchOpen(false)}><section className="w-full max-w-2xl overflow-hidden rounded-lg border border-border bg-background shadow-2xl" onClick={(event) => event.stopPropagation()}><div className="grid grid-cols-[minmax(0,1fr)_auto] items-center border-b border-border"><div className="relative min-w-0"><Search className="absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" /><input autoFocus value={query} onChange={(e) => setQuery(e.target.value)} placeholder="ابحث عن قرآن، أذكار، كتاب..." className="h-16 w-full bg-transparent pr-12 pl-4 outline-none" /></div><Button variant="ghost" size="icon" className="ml-3" onClick={() => setSearchOpen(false)} aria-label="إغلاق"><X /></Button></div><div className="max-h-[55dvh] divide-y divide-border overflow-y-auto p-2">{results.map((item) => <Link key={item.to} to={item.to} onClick={() => setSearchOpen(false)} className="flex items-center gap-3 rounded-md px-3 py-3 hover:bg-muted"><item.icon className="h-5 w-5" /><span className="flex-1"><b className="block text-sm">{item.label}</b><small className="text-muted-foreground">{item.description}</small></span></Link>)}</div></section></div>}
-      <nav className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 border-t border-border bg-background/95 px-2 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl md:hidden"><MobileLink to="/" label="الرئيسية" icon={Home} active={pathname === "/"} /><MobileLink to="/quran-read" label="القرآن" icon={BookOpen} active={pathname.startsWith("/quran")} /><MobileLink to="/radio" label="الإذاعة" icon={Radio} active={pathname === "/radio"} /><button onClick={() => setOpen(true)} className="flex h-16 flex-col items-center justify-center gap-1 text-[10px] text-muted-foreground"><Grid3X3 className="h-5 w-5" />الأقسام</button></nav>
+      <nav className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 border-t border-primary/20 bg-background/95 px-2 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl md:hidden"><MobileLink to="/" label="الرئيسية" icon={Home} active={pathname === "/"} /><MobileLink to="/quran-read" label="القرآن" icon={BookOpen} active={pathname.startsWith("/quran")} /><MobileLink to="/radio" label="الإذاعة" icon={Radio} active={pathname === "/radio"} /><button onClick={() => setOpen(true)} className="flex h-16 flex-col items-center justify-center gap-1 text-[10px] text-muted-foreground"><Grid3X3 className="h-5 w-5" />الأقسام</button></nav>
     </>
   );
 }
 
 function MobileLink({ to, label, icon: Icon, active }: { to: "/" | "/quran-read" | "/radio"; label: string; icon: typeof Home; active: boolean }) {
-  return <Link to={to} className={`flex h-16 flex-col items-center justify-center gap-1 text-[10px] ${active ? "font-bold text-foreground" : "text-muted-foreground"}`}><Icon className="h-5 w-5" />{label}</Link>;
+  return <Link to={to} className={`flex h-16 flex-col items-center justify-center gap-1 text-[10px] ${active ? "font-bold text-primary" : "text-muted-foreground"}`}><Icon className="h-5 w-5" />{label}</Link>;
 }
